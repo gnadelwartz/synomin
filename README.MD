@@ -11,6 +11,7 @@ clone github repository:
 `git clone https://github.com/gnadelwartz/synomin.git`
 
 `cd synomin`
+
 `./makespk.sh`
 
 ### history
