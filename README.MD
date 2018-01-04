@@ -14,6 +14,29 @@ clone github repository:
 
 `./makespk.sh`
 
+## installation
+
+download webmin-xxx.spk
+
+- open synology package center and klick on "manual installation"
+
+- select you downloaded webmin-xxx.spk amd klick "install"
+
+after sucessfull installation aou can access webnmin with your browser on port 10000, e.g. http://192.178.0.20:10000
+
+username: admin
+password: <password you set for synology user admin>
+
+in case your synology admin user has a different name, create user `admin` in synology user management.
+
+webmin emergency user:
+
+ussername: recovery
+password: recovery
+
+you can access the emergency user only from local network (192.178.0.0/8) or localhost
+after login with emergency user you can access only webmin user module to create/modify users
+
 ### history
 
 The Package is based on QTip Webmin 1.600 SPK, but modified to automatically
