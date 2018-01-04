@@ -1,0 +1,14 @@
+#!/bin/sh
+LOG="/var/packages/${SYNOPKG_PKGNAME}/log"
+PKG_VOL_TMP="/`echo $SYNOPKG_PKGDEST | /usr/bin/cut -d'/' -f2`/@tmp"
+PKGVER="`echo ${SYNOPKG_PKGVER} | /usr/bin/cut -d "-" -f1`"
+WMPKG="/var/packages/webmin/target"
+
+/bin/rm -fr $WMPKG/etc
+/bin/rm -fr $WMPKG/bin
+sleep 1
+/bin/mv -f ${PKG_VOL_TMP}/webmin/log /var/log/webmin
+/bin/mv -f ${PKG_VOL_TMP}/webmin/* $WMPKG
+sleep 1
+/bin/rm -f /tmp/${SYNOPKG_PKGNAME}.upgrade
+date +"%c updated to version ${SYNOPKG_PKGVER}<br>" >> $LOG

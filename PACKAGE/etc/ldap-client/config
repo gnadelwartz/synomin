@@ -1,0 +1,9 @@
+auth_ldap=/usr/syno/etc/openldap/ldap.conf
+ldap_user=
+ldap_hosts=
+pam_ldap=
+ldap_tls=
+secret=/usr/syno/etc/private/ldap.secret
+ldap_pass=
+ldap_port=
+init_name=nslcd

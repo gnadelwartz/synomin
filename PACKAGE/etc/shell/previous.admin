@@ -1,0 +1,11 @@
+ipkg dstat
+ipkg list | greo stat
+ipkg list | grep stat
+ipkg install dstat
+ipkg install proftp
+ipkg list | grep ftp
+ipkg install proftpd
+ipkg list | grep apache
+ipkg inbstalll php-apache
+ipkg install php-apache
+ls -l /opt/etc

@@ -1,0 +1,10 @@
+max_servers=100
+show_status=1
+show_ip=0
+groups_dir=/etc/cluster/groups
+scan_time=5
+deffast=2
+sort_mode=0
+display_mode=0
+resolve=1
+deflink=0

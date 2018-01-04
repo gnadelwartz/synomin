@@ -1,0 +1,16 @@
+#!/bin/sh
+PKGINST_TMP="/`echo $SYNOPKG_PKGINST_TEMP_DIR | /usr/bin/cut -d'/' -f 2,3,4`"
+USEPERL="/usr/bin/perl"
+if [ -f /opt/bin/perl ] ; then USEPERL="/opt/bin/perl"; fi
+if [ "$SYNOPKG_DSM_ARCH" = "powerpc" -o "$SYNOPKG_DSM_ARCH" = "ppc824x" -o "$SYNOPKG_DSM_ARCH" = "ppc853x" -o "$SYNOPKG_DSM_ARCH" = "ppc854x" ] ; then
+     if [ "$USEPERL" != "/opt/bin/perl" ] ; then
+          if [ "$SYNOPKG_DSM_LANGUAGE" = "ger" ] ; then
+               /bin/cat $PKGINST_TMP/scripts/perl_de.txt > $SYNOPKG_TEMP_LOGFILE
+          else
+               /bin/cat $PKGINST_TMP/scripts/perl_en.txt > $SYNOPKG_TEMP_LOGFILE
+          fi
+          exit 1
+     fi
+fi
+/bin/grep -q "^bin:" /etc/group  || /bin/echo "bin:x:2:daemon,root" >>/etc/group
+exit 0

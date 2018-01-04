@@ -1,0 +1,3 @@
+[app]
+app_name					=    "Webmin"
+app_desc					=    "a web-based interface for system administration"

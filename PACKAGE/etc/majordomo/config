@@ -1,0 +1,9 @@
+perms=0
+smrsh_program_dir=
+program_dir=/usr/local/majordomo
+majordomo_cf=/usr/local/majordomo/majordomo.cf
+dynamic=0
+owner_file=0
+sort_mode=0
+wrapper_path=
+aliases_file=postfix

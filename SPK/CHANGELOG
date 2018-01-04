@@ -1,0 +1,13 @@
+Notes: *** If you update a previous installed package, only the package specific scripts will be updated, to update webmin pls use the upgrade function inside webmin ***
+       *** Do not use the upgrade button on the webmin home screen, use the function Webmin Configuration - Upgrade Webmin instead, otherwise a new installation dir will be created ***
+Version 1.872-001 - 04/01/2017
+     - load newest webmin version on installation
+	 - webmin supports DSM out of the box since 1.872
+	 - config adjusted to support original and ipkg supplied servers
+Version 1.600-002 - 30/09/2012
+     - based on webmin 1.600
+     - added automatic detection which perl version (synology or ipkg perl) are in use (fixes login problem on diskstation with powerpc)
+     - SPK: changed some webmin configurations for DSM 4.1 (only on new install)
+Version 1.580-001 - 14/06/2012
+     - based on webmin 1.580
+     - initial release

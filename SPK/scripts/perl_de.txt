@@ -1,0 +1,1 @@
+Bei Diskstation's mit PowerPC funktioniert das eingebaute Perl von Synology in Verbindung mit webmin nicht korrekt. Bitte installiere das ipkg Perl.

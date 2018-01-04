@@ -1,0 +1,25 @@
+#!/bin/sh
+PKG_VOL_TMP="/`echo $SYNOPKG_PKGDEST | /usr/bin/cut -d'/' -f2`/@tmp"
+PKGINST_TMP="/`echo $SYNOPKG_PKGINST_TEMP_DIR | /usr/bin/cut -d'/' -f 2,3,4`"
+WMPKG="/var/packages/webmin/target"
+WMVER="`cat $WMPKG/etc/version`"
+WMVERDIR="$WMPKG/webmin-$WMVER"
+USEPERL="/usr/bin/perl"
+if [ -f /opt/bin/perl ] ; then USEPERL="/opt/bin/perl"; fi
+
+if [ "$SYNOPKG_DSM_ARCH" = "powerpc" -o "$SYNOPKG_DSM_ARCH" = "ppc824x" -o "$SYNOPKG_DSM_ARCH" = "ppc853x" -o "$SYNOPKG_DSM_ARCH" = "ppc854x" ] ; then
+     if [ "$USEPERL" != "/opt/bin/perl" ] ; then
+          if [ "$SYNOPKG_DSM_LANGUAGE" = "ger" ] ; then
+               /bin/cat $PKGINST_TMP/scripts/perl_de.txt > $SYNOPKG_TEMP_LOGFILE
+          else
+               /bin/cat $PKGINST_TMP/scripts/perl_en.txt > $SYNOPKG_TEMP_LOGFILE
+          fi
+          exit 1
+     fi
+fi
+/bin/mkdir -p $PKG_VOL_TMP/webmin
+/bin/cp -r $WMPKG/etc ${PKG_VOL_TMP}/webmin
+/bin/cp -r /var/log/webmin ${PKG_VOL_TMP}/webmin/log
+/bin/cp -r $WMPKG/bin ${PKG_VOL_TMP}/webmin
+/bin/touch /tmp/${SYNOPKG_PKGNAME}.upgrade
+exit 0

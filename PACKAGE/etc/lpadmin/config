@@ -1,0 +1,14 @@
+iface_perms=755
+gs_path=gs
+spool_dir=/var/spool/lpd
+print_style=linux
+display_mode=0
+gs_lib=
+gs_fontpath=
+sort_mode=0
+printcap_file=/etc/printcap
+show_status=0
+show_jobs=0
+smbclient_path=smbclient
+driver_style=webmin
+iface_arg=

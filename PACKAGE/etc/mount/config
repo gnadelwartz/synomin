@@ -1,0 +1,12 @@
+show_used=1
+nfs_check=0
+auto_file=
+browse_server=
+fstab_file=/etc/fstab
+long_fstypes=1
+sort_mode=0
+autofs_file=
+nmblookup_path=
+delete_under=
+browse_group=
+smbclient_path=

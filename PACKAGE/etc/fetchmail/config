@@ -1,0 +1,9 @@
+stop_cmd=
+fetchmail_path=/var/packages/MailStation/target/bin/fetchmail
+daemon_user=root
+config_file=
+view_mode=1
+max_users=400
+pid_file=/var/run/fetchmail.pid
+mda_command=
+start_cmd=

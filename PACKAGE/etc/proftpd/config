@@ -1,0 +1,13 @@
+ftpusers=/etc/ftpusers
+proftpd_conf=/opt/etc/proftpd.conf
+test_config=1
+test_manual=0
+proftpd_path=/opt/sbin/proftpd
+test_always=0
+pid_file=/usr/local/var/proftpd.pid
+add_file=
+defines_mods=
+defines_file=
+defines_name=
+start_cmd=
+stop_cmd=

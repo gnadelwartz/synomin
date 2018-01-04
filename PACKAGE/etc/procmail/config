@@ -1,0 +1,3 @@
+procmail=procmail
+includes=0
+procmailrc=/etc/procmailrc

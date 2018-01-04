@@ -1,0 +1,45 @@
+#!/bin/sh
+LOG="/var/packages/webmin/log"
+WMEnabled="/var/packages/webmin/enabled"
+WMAPP="/usr/syno/synoman/webman/3rdparty/webmin"
+WMPKG="/var/packages/webmin/target"
+WMVER="`cat $WMPKG/etc/version`"
+WMVERDIR="$WMPKG/webmin-$WMVER"
+WMPERL="`cat $WMPKG/etc/perl-path`"
+USEPERL="/usr/bin/perl"
+if [ -f /opt/bin/perl ] ; then USEPERL="/opt/bin/perl"; fi
+
+case $1 in
+start)
+     if [ ! -f "$WMEnabled" ]; then
+          exit 0
+     fi
+     if [ "$WMPERL" != "$USEPERL" ] ; then
+          cd $WMPKG/bin
+          (find . -name '*.cgi' -print ; find . -name '*.pl' -print) | perl "perlpath.pl" $USEPERL -
+          echo $USEPERL > $WMPKG/etc/perl-path
+     fi
+     cd $WMPKG/etc
+     ./start
+     exit 0
+;;
+stop)
+     cd $WMPKG/etc
+     ./stop
+     sleep 1
+     PS="`/bin/ps | /bin/grep miniserv.pl | /bin/grep -v grep`"
+     if [ -z "$PS" ]; then
+        /bin/rm -f /var/log/webmin/miniserv.pid
+     fi
+;;
+status)
+     if [ -h "$WMAPP" ]; then
+          exit 0
+     else
+          exit 1
+     fi
+;;
+log)
+     echo "$LOG"
+;;
+esac

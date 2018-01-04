@@ -1,0 +1,16 @@
+alt_haresources=
+stop_cmd=kill `cat /var/run/heartbeat.pid`
+apply_cmd=
+req_resource_cmd=/usr/lib/heartbeat/req_resource
+version=
+authkeys=
+alt_ha_cf=
+serials=/dev/ttyS*
+ha_cf=
+haresources=
+alt_authkeys=
+start_cmd=/usr/lib/heartbeat/heartbeat
+resource_d=
+pid_file=/var/run/heartbeat.pid
+ha_dir=/etc
+heartbeat=/usr/syno/sbin

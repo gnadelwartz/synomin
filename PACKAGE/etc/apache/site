@@ -1,0 +1,4 @@
+modules=core/2.427 worker/2.427
+path=/opt/sbin/httpd
+size=599080
+webmin=1.871.0101.1355
