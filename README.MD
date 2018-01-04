@@ -18,15 +18,17 @@ clone github repository:
 
 to install and use webmin on Synology Disc Station you have to install the Packages `Perl` and `Git server` from package center.
 
+to get most out of you Synology Disc Station you can also install the package `Mail Station` and `Apache 2.4`
+
 ## installation
 
 download webmin-xxx.spk
 
 - open synology package center and klick on "manual installation"
 
-- select you downloaded webmin-xxx.spk amd klick "install"
+- select your downloaded `webmin-xxx.spk` amd klick "install"
 
-after sucessfull installation aou can access webnmin with your browser on port 10000, e.g. http://192.178.0.20:10000
+after sucessfull installation you can access webnmin with your browser on port 10000, e.g. http://192.178.0.20:10000
 ```
 username: admin
 password: <password you set for synology user admin>
@@ -47,5 +49,5 @@ after login with emergency user you can access only webmin user module to create
 ### history
 
 The Package is based on QTip Webmin 1.600 SPK, but modified to automatically
-download the newest webmimin packkage from webmin.com and settings are changed
+download the newest webmimin package from webmin.com and settings are changed
 to support the newest DSM Software and Addons.
