@@ -14,6 +14,10 @@ clone github repository:
 
 `./makespk.sh`
 
+## pre requisites
+
+to install and use webmin on Synology Disc Station you have to install the Packages `Perl` and `Git server` from package center.
+
 ## installation
 
 download webmin-xxx.spk
@@ -30,7 +34,7 @@ password: <password you set for synology user admin>
 
 in case your synology admin user has a different name, create user `admin` in synology user management.
 
-webmin emergency user:
+### webmin emergency user:
 
 ```
 ussername: recovery
