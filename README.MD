@@ -23,16 +23,19 @@ download webmin-xxx.spk
 - select you downloaded webmin-xxx.spk amd klick "install"
 
 after sucessfull installation aou can access webnmin with your browser on port 10000, e.g. http://192.178.0.20:10000
-
+```
 username: admin
 password: <password you set for synology user admin>
+```
 
 in case your synology admin user has a different name, create user `admin` in synology user management.
 
 webmin emergency user:
 
+```
 ussername: recovery
 password: recovery
+```
 
 you can access the emergency user only from local network (192.178.0.0/8) or localhost
 after login with emergency user you can access only webmin user module to create/modify users
