@@ -53,17 +53,14 @@ Webmin is configured to suppoprt the following Synology installable packages:
 - `Webstation` (ngix, apache, php)
 - `Webalizer`
 
-to enable more services and features of webmin you have to install the `ipkg` package manager which priovides mor system commands and libs.
-this can be done by adding "https://www.cphub.net" as repository to you package manager and install `Easy Bootstrap Installer`
+to install the `ipkg` package manager which provides more system commands and libs add "https://www.cphub.net" as repository to you package manager and install `Easy Bootstrap Installer`. alternatively you can download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=579) and install it manually.
 
-alternatively you can download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=579) and install it manually.
+enable SSH access to your Synology under "System Setting -> Terminal" and SHH login to your Synology as `admin`.
+get root access with `sudo -i` as admin using the same password.
 
-now enable SSH access to your Synology under "System Setting -> Terminal" and SHH login to your Synology as `admin`.
-to get root access you have to call `sudo -i` as admin using the same password.
+list of installable packages with `ipkg list`, to install packages run `ipkg install <NAME>`.
 
-to get the list of installable packages run `ipkg list`, to install packages run `ipkg install <NAME>`.
 I recomend to install the following packages:
-
 `ipkg install at coreutils git dstat man man-pages perl perl-net-ssleay`
 
 ```
@@ -77,7 +74,8 @@ man-pages - 2.76-1 - unix manual pages
 perl - 5.26.1-4 - Practical Extraction and Report Language.
 perl-net-ssleay - 1.82-1 - Net_SSLeay - Perl extension for using OpenSSL
 ```
-additional packes you may install:
+
+additional packages you may find useful:
 
 ```
 bacula - 7.0.5-5 - A set of Open Source, enterprise ready, computer programs to manage backup, recovery, and verification of computer data across a network of computers of different kinds.
