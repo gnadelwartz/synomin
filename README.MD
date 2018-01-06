@@ -47,13 +47,13 @@ after login with emergency user you can access only webmin user module to create
 
 ### advanced install
 
-Webmin is configured to suppoprt the following Synology installable packages:
+Webmin is configured to support the following Synology installable packages:
 
 - `Mail Station` (postfix, dovecot, spamassasin, roundcube)
 - `Webstation` (ngix, apache, php)
 - `Webalizer`
 
-to install the `ipkg` package manager which provides more system commands and libs add "https://www.cphub.net" as repository to you package manager and install `Easy Bootstrap Installer`. alternatively you can download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=579) and install it manually.
+to install the `ipkg` package manager, which provides more system commands and libs, add "https://www.cphub.net" as repository to you package manager and install `Easy Bootstrap Installer`. alternatively you can download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=579) and install it manually.
 
 enable SSH access to your Synology under "System Setting -> Terminal" and SHH login to your Synology as `admin`.
 get root access with `sudo -i` as admin using the same password.
@@ -61,6 +61,7 @@ get root access with `sudo -i` as admin using the same password.
 list of installable packages with `ipkg list`, to install packages run `ipkg install <NAME>`.
 
 I recomend to install the following packages:
+
 `ipkg install at coreutils git dstat man man-pages perl perl-net-ssleay`
 
 ```
@@ -76,6 +77,7 @@ perl-net-ssleay - 1.82-1 - Net_SSLeay - Perl extension for using OpenSSL
 ```
 
 additional packages you may find useful:
+
 
 ```
 bacula - 7.0.5-5 - A set of Open Source, enterprise ready, computer programs to manage backup, recovery, and verification of computer data across a network of computers of different kinds.
