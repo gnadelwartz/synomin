@@ -1,1 +1,1 @@
-Attention, be careful when using webmin. The execution of an incorrect command may damage your system configuration. Everything at your own risk. Please login into webmin with username 'admin' and you admin passowrd. 
+Attention, be careful when using webmin. The execution of an incorrect command may damage your system configuration. Everything at your own risk. Please login into webmin with username 'admin' and you admin passowrd.<p> 
