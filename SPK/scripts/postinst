@@ -66,19 +66,12 @@ ptg)
 ;;
 esac
 if [ ! -f "/tmp/${SYNOPKG_PKGNAME}.upgrade" ] ; then
-     /bin/sed "s/lang=en/lang=$WMLANG/" < $WMCONFFILE > $WMCONFFILE.bak
-     /bin/sed "s/tempdir=\/tmp/tempdir=$WMTMP/" < $WMCONFFILE.bak > $WMCONFFILE.bak2
-     if [ -f "$WMCONFFILE.bak2" ] ; then
-          /bin/mv -f $WMCONFFILE.bak2 $WMCONFFILE
-          /bin/rm -f $WMCONFFILE.bak
-     fi
      mkdir -p /var/log/webmin/output
      if [ "$DSMLANGUAGE" = "ger" ] ; then
           /bin/cat /var/packages/${SYNOPKG_PKGNAME}/scripts/hint_de.txt > $SYNOPKG_TEMP_LOGFILE
      else
           /bin/cat /var/packages/${SYNOPKG_PKGNAME}/scripts/hint_en.txt > $SYNOPKG_TEMP_LOGFILE
      fi
-     date +"%c installed version ${SYNOPKG_PKGVER}<br>" >> $LOG
 fi
 cd /var/packages/${SYNOPKG_PKGNAME}/target/scripts 
 ./install.sh >> $SYNOPKG_TEMP_LOGFILE 2>&1

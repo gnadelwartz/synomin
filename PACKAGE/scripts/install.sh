@@ -17,7 +17,7 @@ echo "download latest webmin release ...<br>"
 # unpack and install
 if [ -f "$webmin.$tarext" ]
 then
-    echo "<br>unpacking webmin ..."
+    # echo "<br>unpacking webmin ..."
     /bin/tar -xzf "$webmin.$tarext"
     rm "$webmin.$tarext"
 
@@ -33,11 +33,11 @@ then
     echo $var_dir >$config_dir/var-path
 
     export config_dir atboot nouninstall makeboot nostart
-    ./setup.sh $install_dir |  /bin/tee install.log | grep -e "\*" -e "Webmin" -e "ERROR" -e "browser" -e ":10000"
+    ./setup.sh $install_dir | grep -e "Webmin" -e "ERROR" -e ":10000"
     cd ..
     # copy dummy iconv to usr/loca/bin
 	[ ! -f "/usr/local/bin/iconv" ] && cp iconv /usr/local/bin
-    echo "<br>cleanup ...<br>"
+    echo "<br>cleanup ..."
     rm -rf webmin*
 else
    echo "<p>Download of webmin failed!<p>"
