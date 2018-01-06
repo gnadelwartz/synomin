@@ -36,7 +36,7 @@ then
     ./setup.sh $install_dir | grep -e "Webmin" -e "ERROR" -e ":10000"
     cd ..
     # copy dummy iconv to usr/loca/bin
-	[ ! -f "/usr/local/bin/iconv" ] && cp iconv /usr/local/bin
+	cp iconv /usr/local/bin
     echo "<br>cleanup ..."
     rm -rf webmin*
 else
