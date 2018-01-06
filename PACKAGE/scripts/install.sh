@@ -33,7 +33,7 @@ then
     echo $var_dir >$config_dir/var-path
 
     export config_dir atboot nouninstall makeboot nostart
-    ./setup.sh $install_dir >install.log
+    ./setup.sh $install_dir | grep -v -e "^$" -e "done$"
 
     cd ..
     echo cleanup ...

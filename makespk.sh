@@ -14,8 +14,10 @@ tar -czf ../SPK/package.tgz *
 cd ..
 
 # create SPK
-echo "make webmin-$ver.spk ..."
+echo "make webmin-$VER.spk ..."
 cd SPK
+mv INFO INFO.bak
+echo "version=\"$VER\"" >INFO; sed '/version=/d' INFO.bak >>INFO; rm -f INFO.bak
 tar -cf ../webmin-$VER.spk *
 cd ..
 
