@@ -81,5 +81,5 @@ if [ ! -f "/tmp/${SYNOPKG_PKGNAME}.upgrade" ] ; then
      date +"%c installed version ${SYNOPKG_PKGVER}<br>" >> $LOG
 fi
 cd /var/packages/${SYNOPKG_PKGNAME}/target/scripts 
-if ./install.sh >> $SYNOPKG_TEMP_LOGFILE 2>&1
+./install.sh >> $SYNOPKG_TEMP_LOGFILE 2>&1
 exit $?
