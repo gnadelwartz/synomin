@@ -11,17 +11,17 @@ tarext="tar.gz"
 MINICONF=/var/packages/webmin/target/etc/miniserv.conf
 
 # download latest webmin
-echo "download latest webmin release ..."
+echo "<br>download latest webmin release ...<br>"
 /bin/wget -nv "https://download.webmin.com/devel/tarballs/$webmin.$tarext"
 
 # unpack and install
 if [ -f "$webmin.$tarext" ]
 then
-    echo "unpacking webmin ...<br>"
+    echo "<br>unpacking webmin ...<br>"
     /bin/tar -xzf "$webmin.$tarext"
     rm "$webmin.$tarext"
 
-    echo "start installation of `ls -d webmin*` ...<br>"
+    echo "<br>start installation of `ls -d webmin*` ...<br>"
     cd webmin*
     install_dir=`grep "^root=" ${MINICONF}| sed 's/.*root=//'`
     config_dir=`grep "env_WEBMIN_CONFIG=" ${MINICONF}| sed 's/.*_WEBMIN_CONFIG=//'`
@@ -37,7 +37,7 @@ then
     cd ..
     # copy dummy iconv to usr/loca/bin
 	[ ! -f "/usr/local/bin/iconv" ] && cp iconv /usr/local/bin
-    echo "cleanup ...<br>"
+    echo "<br>cleanup ...<br>"
     rm -rf webmin*
 else
    echo "<p>Download of webmin failed!<p>"
