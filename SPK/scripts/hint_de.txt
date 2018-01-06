@@ -1,1 +1,1 @@
-Achtung, sei vorsichtig bei der Benutzung von webmin. Die Ausführung eines falschen Kommandos kann deine Systemkonfiguration zerstören. Alles auf eigene Gefahr. Bitte melden Sie sich in Webmin mit Benutzername "admin", Passwort "admin" an und ändern Sie das Passwort so schnell wie möglich!
+Achtung, sei vorsichtig bei der Benutzung von webmin. Die Ausführung eines falschen Kommandos kann deine Systemkonfiguration zerstören. Alles auf eigene Gefahr. Melden dich bei webmin mit den Passwort "admin" und deinem admin passwort an.

@@ -33,7 +33,7 @@ then
     echo $var_dir >$config_dir/var-path
 
     export config_dir atboot nouninstall makeboot nostart
-    ./setup.sh $install_dir | grep -v -e "^$" -e "done$"
+    ./setup.sh $install_dir |  /bin/tee install.log | grep -e "\*" -e "Webmin" -e "ERROR" -e "browser" -e ":10000"
 
     cd ..
     echo cleanup ...
