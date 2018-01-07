@@ -47,6 +47,8 @@ after login with emergency user you can access only webmin user module to create
 
 ### advanced install
 
+First install all software packages recommended here, then install `webmin-xxx.spk`.
+
 Webmin is configured to support the following Synology installable packages:
 
 - `Mail Station` (postfix, dovecot, spamassasin, roundcube)
@@ -63,6 +65,9 @@ list of installable packages with `ipkg list`, to install packages run `ipkg ins
 I recomend to install the following packages:
 
 `ipkg install at coreutils git dstat man man-pages perl perl-net-ssleay`
+
+create the manual page index with (this may take a while):
+`makewhatis /opt/man /opt/share/man`
 
 ```
 at - 3.1.8-5 - Delayed job execution and batch processing.
