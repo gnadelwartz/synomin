@@ -1,8 +1,8 @@
-ntp_only=1
-lease=5
-hwclock_flags=sysconfig
-timeserver=
 zone_style=linux
+hwclock_flags=sysconfig
+lease=5
 seconds=1
+ntp_only=1
 hwtime=2
 timeserver_hardware=1
+timeserver=

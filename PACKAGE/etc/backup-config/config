@@ -1,7 +1,7 @@
-apply=1
 mods=apache webmin
+nofiles=
+webmin_subs=0
 configfile=
 dest=/var/packages/webmin/target/backup/webmin_backup.tgz
-webmin_subs=0
-nofiles=
 date_subs=0
+apply=1

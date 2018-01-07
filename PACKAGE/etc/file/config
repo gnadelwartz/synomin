@@ -1,21 +1,21 @@
 xfs_attr=&has_command("attr")
-ext3_acl=&has_command("getfacl") && &has_command("setfacl")
-ext4_attr=&has_command("attr")
-extract=1
-ext2_ext=&has_command("lsattr") && &has_command("chattr")
-iconsize=0
-setfacl=setfacl --set-file=-
-ext3_attr=&has_command("attr")
-ext4_acl=&has_command("getfacl") && &has_command("setfacl")
-xfs_acl=&has_command("getfacl") && &has_command("setfacl")
-nocharset=0
 defuser=root
+nocharset=0
 hide_dot_files=0
-ext2_acl=&has_command("getfacl") && &has_command("setfacl")
 reiserfs_acl=&has_command("getfacl") && &has_command("setfacl")
+ext2_acl=&has_command("getfacl") && &has_command("setfacl")
+ext3_attr=&has_command("attr")
 ext4_ext=&has_command("lsattr") && &has_command("chattr")
-getfacl=getfacl
-defzip=0
-ext3_ext=&has_command("lsattr") && &has_command("chattr")
-force_text=0
+xfs_acl=&has_command("getfacl") && &has_command("setfacl")
+ext3_acl=&has_command("getfacl") && &has_command("setfacl")
+iconsize=0
 ext2_attr=&has_command("attr")
+defzip=0
+ext2_ext=&has_command("lsattr") && &has_command("chattr")
+getfacl=getfacl
+force_text=0
+extract=1
+ext4_attr=&has_command("attr")
+setfacl=setfacl --set-file=-
+ext4_acl=&has_command("getfacl") && &has_command("setfacl")
+ext3_ext=&has_command("lsattr") && &has_command("chattr")

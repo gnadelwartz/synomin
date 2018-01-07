@@ -1,10 +1,7 @@
-doc_dir=/usr/doc /usr/share/doc
-howto_dir=/usr/doc/HOWTO /usr/doc/HOWTO/mini /usr/share/doc/HOWTO /usr/share/doc/HOWTO/mini
-list_cmd_sect=man -w SECTION PAGE
-man2html_path=man2html
-man_dir=/usr/man:/usr/share/man:/usr/local/man:/usr/local/share/man
-kernel_dir=/usr/src/linux/Documentation
-man_cmd=man PAGE
 man_cmd_sect=man SECTION PAGE
+man_dir=/opt/share/man:/opt/man/opt/share/man
+list_cmd_sect=man -w SECTION PAGE
+man_cmd=man PAGE
+search_cmd=apropos PAGE
 list_cmd=man -w PAGE
-search_cmd=man -k PAGE
+man2html_path=man2html

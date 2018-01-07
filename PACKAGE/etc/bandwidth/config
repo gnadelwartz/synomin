@@ -1,2 +1,2 @@
-bandwidth_log=/var/log/bandwidth
 firewall_system=
+bandwidth_log=/var/log/bandwidth

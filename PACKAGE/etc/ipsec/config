@@ -1,8 +1,8 @@
 stop_cmd=/etc/init.d/ipsec stop
 secrets=/etc/ipsec.secrets
-file=/etc/ipsec.conf
+restart_cmd=/etc/init.d/ipsec restart
 logfile=/var/log/messages
+file=/etc/ipsec.conf
+policies_dir=/etc/ipsec.d/policies
 start_cmd=/etc/init.d/ipsec start
 ipsec=/usr/local/sbin/ipsec
-policies_dir=/etc/ipsec.d/policies
-restart_cmd=/etc/init.d/ipsec restart

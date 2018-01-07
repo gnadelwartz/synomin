@@ -1,4 +1,4 @@
-init_script=
-dovecot=/var/packages/MailServer/target/sbin/dovecot
 dovecot_config=/var/packages/MailServer/target/etc/dovecot/dovecot.conf
 pid_file=/var/run/dovecot/master.pid
+init_script=
+dovecot=/var/packages/MailServer/target/sbin/dovecot

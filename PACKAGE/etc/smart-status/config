@@ -1,5 +1,5 @@
-attribs=1
-smartctl=smartctl
-mode=1
 extra=
+smartctl=smartctl
+attribs=1
 ata=1
+mode=1
