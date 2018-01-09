@@ -21,11 +21,12 @@ to install and use webmin on Synology Disc Station you have to install the Packa
 
 ## installation
 
-download `webmin-xxx.spk`
+download `webmin-1.872-06.spk`
 
 - open synology package center and klick on "manual installation"
 
-- select your downloaded `webmin-xxx.spk` amd klick "install"
+- select your download `webmin-1.872-06.spk`
+  and klick "install"
 
 after sucessfull installation you can access webnmin with your browser on port 10000, e.g. http://192.178.0.20:10000
 ```
@@ -47,7 +48,8 @@ after login with emergency user you can access only webmin user module to create
 
 ### advanced install
 
-First install all software packages recommended here, then install `webmin-xxx.spk`.
+First install all software packages recommended here, then download `webmin-1.872-06.spk`
+and install webmin.
 
 Webmin is configured to support the following Synology installable packages:
 
@@ -130,3 +132,4 @@ zoo - 2.10-1 - zoo - File archiving utility with compression
 The Package is based on QTip Webmin 1.600 SPK, but modified to automatically
 download the newest webmimin package from webmin.com and settings are changed
 to support the newest DSM Software and Addons.
+

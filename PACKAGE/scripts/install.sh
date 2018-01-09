@@ -37,7 +37,10 @@ then
     cd ..
     # copy dummy iconv to usr/loca/bin
 	cp iconv /usr/local/bin
+	# cp man pages
     echo "<br>cleanup ..."
+	mkdir -p /opt/man/man1
+	cp ../man/ipkg.1 /opt/man/man1/
     rm -rf webmin*
 else
    echo "<p>Download of webmin failed!<p>"
