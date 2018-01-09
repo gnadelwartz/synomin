@@ -36,7 +36,7 @@ password: <password you set for synology user admin>
 
 in case your synology admin user has a different name, create user `admin` in synology user management.
 
-### webmin emergency user:
+## webmin emergency user:
 
 ```
 ussername: recovery
@@ -46,7 +46,7 @@ password: recovery
 you can access the emergency user only from local network (192.178.0.0/8) or localhost
 after login with emergency user you can access only webmin user module to create/modify users
 
-### advanced install
+## advanced install
 
 First install all software packages recommended here, then download `webmin-1.872-06.spk`
 and install webmin.
@@ -127,7 +127,7 @@ zip - 3.0-1 - a compression and file packaging utility.
 zoo - 2.10-1 - zoo - File archiving utility with compression
 ```
 
-### history
+## history
 
 The Package is based on QTip Webmin 1.600 SPK, but modified to automatically
 download the newest webmimin package from webmin.com and settings are changed
