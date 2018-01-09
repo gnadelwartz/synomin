@@ -69,7 +69,8 @@ I recomend to install the following packages:
 `ipkg install at coreutils git dstat man man-pages perl perl-net-ssleay`
 
 create the manual page index with (this may take a while):
-`makewhatis /opt/man /opt/share/man`
+
+`makewhatis /opt/man /opt/share/man /volume1/@optware/man /volume1/@optware/share/man`
 
 ```
 at - 3.1.8-5 - Delayed job execution and batch processing.
