@@ -21,7 +21,7 @@ to install and use webmin on Synology Disc Station you have to install the Packa
 
 ## installation
 
-download (webmin-1.872-07.spk)[https://github.com/gnadelwartz/synomin/raw/master/webmin-1.872-07.spk]
+download [webmin-1.872-07.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.872-07.spk)
 
 - open synology package center and klick on "manual installation"
 
@@ -48,7 +48,7 @@ after login with emergency user you can access only webmin user module to create
 
 ## advanced install
 
-First install all software packages recommended here, then download (webmin-1.872-07.spk)[https://github.com/gnadelwartz/synomin/raw/master/webmin-1.872-07.spk]
+First install all software packages recommended here, then download [webmin-1.872-07.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.872-07.spk)
 and install webmin.
 
 Webmin is configured to support the following Synology installable packages:
