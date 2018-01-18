@@ -24,7 +24,7 @@ cd ..
 
 # update REDAME.MD
 mv README.MD README.MD.bak
-sed 's/download `webmin-.*/download `webmin-'${VER}'.spk`/' README.MD.bak >README.MD
+sed 's/download \[webmin-.*/download [webmin-'${VER}'.spk](https:\/\/github.com\/gnadelwartz\/synomin\/raw\/master\/webmin-'${VER}'.spk)/' README.MD.bak >README.MD
 
 # clean up
 echo clean up ...
