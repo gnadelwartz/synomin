@@ -40,7 +40,7 @@ then
 	# cp man pages
     echo "<br>cleanup ..."
 	mkdir -p /opt/man/man1
-	cp ../man/ipkg.1 /opt/man/man1/
+	cp ../man/man1/ipkg.1 /opt/man/man1/
     rm -rf webmin*
 else
    echo "<p>Download of webmin failed!<p>"
