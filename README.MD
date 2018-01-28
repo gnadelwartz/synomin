@@ -57,18 +57,19 @@ Webmin is configured to support the following Synology installable packages:
 - `Webstation` (ngix, apache, php)
 - `Webalizer`
 
-to install the `ipkg` package manager, which provides more system commands and libs, add "https://www.cphub.net" as repository to you package manager and install `Easy Bootstrap Installer`. alternatively you can download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=677) and install it manually.
+`ipkg` optware-ng package manager, which provides more system commands and libs, is detected and installed automatically.
+alternatively you can download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=677) and install it manually before installing webmin.
 
 enable SSH access to your Synology under "System Setting -> Terminal" and SHH login to your Synology as `admin`.
 get root access with `sudo -i` as admin using the same password.
 
 list of installable packages with `ipkg list`, to install packages run `ipkg install <NAME>`.
 
-I recomend to install the following packages:
+the following packages will be installed automatically if ipkg is installed or detected:
 
 `ipkg install at coreutils git dstat man man-pages perl perl-net-ssleay`
 
-create the manual page index with (this may take a while):
+the manual page index is also automatically created (this may take a while):
 
 `makewhatis /opt/man /opt/share/man /volume1/@optware/man /volume1/@optware/share/man`
 
