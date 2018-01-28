@@ -41,7 +41,8 @@ then
     cd ..
     
     # copy dummy iconv to usr/local/bin
-    cp iconv /usr/local/bin
+    # cp iconv /usr/local/bin
+	rm -f /opt/bin/iconv
     # cp addditional man pages
     mkdir -p /opt/man/man1
     cp ../man/man1/* /opt/man/man1/
