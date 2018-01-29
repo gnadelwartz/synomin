@@ -1,7 +1,6 @@
 # Synology Disc Station Webmin package
 
-since version 1.872 webmin supports Synology DMS 5.0+ out of the box
-installing and managing IKPG packages is supported since version 1.873.
+since version 1.873 webmin supports Synology DMS 5.0+ and IKPG package manager out of the box.
 
 to make it easyer for regular users I provide a SPK to install webmin
 
