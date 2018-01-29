@@ -1,0 +1,35 @@
+. /usr/syno/bin/jsoncmd
+
+BSHOME="${SYNOPKG_PKGPATH}/target"
+BSCONF="${BSHOME}/*_installed"
+PKG_VOL="/`/usr/bin/readlink ${BSHOME} | /usr/bin/cut -d'/' -f2`"
+
+EXPPATH=$(jget "${SYNOPKG_BKP_INPUT}" ".temp_path")
+if [ $? -ne 0 ]; then
+    jerr "Failed to get export path"
+    exit 1
+fi
+
+if [ ! -f ${BSCONF} ]; then
+     jerr "Failed to get package manager type"
+     exit 1
+fi
+
+if [ -d "${BSHOME}" ]; then
+    /bin/cp -pf ${BSCONF} ${EXPPATH}
+fi
+
+BSTYPE="`/usr/bin/basename ${BSCONF} | /usr/bin/cut -d'_' -f1`"
+if [ "${BSTYPE}" == "entware-ng" ] ; then
+     /bin/cp -af ${PKG_VOL}/@entware ${EXPPATH}
+elif [ "${BSTYPE}" == "entware" -o "${BSTYPE}" == "optware-ng" ] ; then
+     /bin/cp -af ${PKG_VOL}/@optware ${EXPPATH}
+else
+     /bin/cp -af ${PKG_VOL}/@${BSTYPE} ${EXPPATH}
+fi
+
+jout_begin
+joutstr "app_data_version" "1.0"
+jout_end
+
+exit 0

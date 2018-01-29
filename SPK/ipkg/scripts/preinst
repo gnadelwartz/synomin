@@ -1,0 +1,104 @@
+#!/bin/sh
+#********************************************************************#
+#  Easy Bootstrap Installer - Part 2                                 #
+#  Description: automatic bootstrap installer for synology nas       #
+#  Author:      QTip from the german Synology support forum          #
+#  Copyright:   2015-2016 by QTip                                    #
+#  License:     GNU GPLv3 (see LICENSE)                              #
+#  ----------------------------------------------------------------  #
+#  Version:     0.75 - 07/06/2016                                    #
+#  for more information check the changelog                          #
+#********************************************************************#
+
+[ -f /tmp/${SYNOPKG_PKGNAME}.upgrade ] && exit 0
+
+if [ "${OUTPUTERROR}" == "true" ] ; then
+     exit 1
+fi
+
+if [ -f `/usr/bin/dirname $0`/lang/${SYNOPKG_DSM_LANGUAGE} ] ; then
+     . `/usr/bin/dirname $0`/lang/${SYNOPKG_DSM_LANGUAGE}
+else
+     . `/usr/bin/dirname $0`/lang/enu
+fi
+. `/usr/bin/dirname $0`/lsof_lite
+
+PKG_VOL_TMP=/volume1/@tmp
+PKG_TMP=/tmp
+
+# DSM < 5.0-4458
+# We must check the bootstraps yet, because the wizard files in dsm < 5.0 are not executeable
+determine_bootstrap() {
+     if [ -f ${PKG_TMP}/bootstraps -a -s ${PKG_TMP}/bootstraps ] ; then
+          # determine bootstrap by synology arch
+          SYNOUNIQUE=`/bin/get_key_value /etc.defaults/synoinfo.conf unique`
+          SYNOMODEL=`/bin/get_key_value /etc.defaults/synoinfo.conf upnpmodelname`
+          SYNOARCH=`echo ${SYNOUNIQUE} | /usr/bin/cut -d "_" -f2`
+          BOOTSTRAPS=`/bin/get_key_value ${PKG_TMP}/bootstraps ${SYNOARCH}`
+          OPTFEED=`echo ${BOOTSTRAPS} | /usr/bin/cut -d "," -f1`
+          ENTFEED=`echo ${BOOTSTRAPS} | /usr/bin/cut -d "," -f3`
+          ENTINSTALLER=`echo ${BOOTSTRAPS} | /usr/bin/cut -d "," -f4`
+          ENTFILE="`/usr/bin/basename ${ENTINSTALLER}`"
+          if [ -n "${OPTFEED}" -a -z "${ENTFEED}" ] ; then
+               echo "optware"
+          elif [ -n "${ENTFEED}" -a -z "${OPTFEED}" ] ; then
+               echo "entware"
+          elif [ -z "${ENTFEED}" -a -z "${OPTFEED}" ] ; then
+               echo "none"
+          else
+               echo "optent"
+          fi
+     else
+          echo "false"
+     fi
+}
+if [ ${SYNOPKG_DSM_VERSION_BUILD} -lt 4458 ] ; then
+     PKG_BSTP_ERRORMSG_TEXT=""
+     select_integrate_bssource="false"
+     select_integratevbox="false"
+     # Check and copy of /tmp/bootstrap
+     [ ! -f ${PKG_TMP}/bootstraps ] && /bin/cp -f `/usr/bin/dirname $0`/bootstraps ${PKG_TMP}
+     # Check if desired bootstrap is available
+     BTRET=$(determine_bootstrap)
+     if [ "${BTRET}" == "false" ] ; then
+          /bin/rm -f ${PKG_TMP}/bootstraps
+          PKG_BSTP_ERRORMSG_TEXT="${PKG_BSTP_SERVER_NOTAVAIL_ERROR}"
+     elif [ "${BTRET}" == "none" ] ; then
+          PKG_BSTP_ERRORMSG_TEXT="${PKG_BSTP_NOBSTP_ERROR}"
+     elif [ "${BTRET}" == "optware" -a "${select_entware}" == "true" ] ; then
+          PKG_BSTP_ERRORMSG_TEXT="${PKG_BSTP_NOOPTWARE_ERROR}"
+     elif [ "${BTRET}" == "entware" -a "${select_optware}" == "true" ] ; then
+          PKG_BSTP_ERRORMSG_TEXT="${PKG_BSTP_NOENTWARE_ERROR}"
+     fi
+     [ -n "${PKG_BSTP_ERRORMSG_TEXT}" ] && echo "${PKG_BSTP_ERRORMSG_TEXT}" > ${SYNOPKG_TEMP_LOGFILE}
+fi
+
+if [ "${select_integratevbox}" == "true" ] ; then
+     VBOXOPEN=$(lsof_lite "/opt/VirtualBox /volume?/@*ware/VirtualBox /volumeUSB?/usbshare*/@*ware/VirtualBox")
+     if [ -n "${VBOXOPEN}" ] ; then
+          echo "${PKG_OPENFILES_ERROR4} <b>/opt/VirtualBox</b> ${PKG_ERROR_PART4}<br>${PKG_OPENFILES_ERROR2}<br>&nbsp;&nbsp;${VBOXOPEN}" > ${SYNOPKG_TEMP_LOGFILE}
+          exit 1
+     else
+          /bin/mkdir -p ${PKG_VOL_TMP}/ebi
+          /bin/mv /opt/VirtualBox ${PKG_VOL_TMP}/ebi
+     fi
+fi
+if [ "${select_integrate_bssource}" == "true" ] ; then
+     /bin/mkdir -p ${PKG_VOL_TMP}/ebi
+     /bin/cp -r /opt/* ${PKG_VOL_TMP}/ebi
+#     /bin/rm -rf /opt
+elif [ "${select_integrate_bssource}" == "false" ] ; then
+     TIMESTAMP="`/bin/date "+%s"`"
+     /bin/mv -f /opt /opt_${TIMESTAMP}
+fi
+if [ -n "${select_remove_bssource}" ] ; then
+     if [ -x `/usr/bin/dirname $0`/remove_bootstrap ] ; then
+          `/usr/bin/dirname $0`/remove_bootstrap
+     else
+          if [ -d ${PKG_VOL_TMP}/ebi/VirtualBox ] ; then
+               [ -e /opt ] || /bin/mkdir -p /opt
+               /bin/mv ${PKG_VOL_TMP}/ebi/* /opt
+          fi
+          exit 1
+     fi
+fi

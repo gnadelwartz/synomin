@@ -1,0 +1,64 @@
+[{
+     "step_title": "Bootstrap-Auswahl",
+     "items": [{
+          "type": "singleselect",
+          "desc": "Sie verwenden Easy Bootstrap Installer unter DSM < 5.0 - aufgrund der Einschränkungen vom Paketzentrum kann die Verfügbarkeit erst nach Bestätigung der Zusammenfassung geprüft werden.<br>Bitte wählen Sie das gewünschte Paket.",
+          "subitems": [{
+               "key": "select_optware",
+               "desc": "Optware(-ng) iPKG®"
+          }, {
+               "key": "select_entware",
+               "desc": "Entware-ng oPKG"
+          }]
+     }]
+},{
+     "step_title": "Bootstrap-Auswahl",
+     "items": [{
+          "type": "multiselect",
+          "desc": "Der derzeit installierte Bootstrap kann zuvor entfernt oder durch Umbenennung des Quellverzeichnisses (üblicherweise @optware, @qnapware oder @entware) deaktiviert werden.<br><b>Achtung:</b> Bei aktivierter Option 'Entfernen der installierten Bootstrap(s)' werden die ermittelten Bootstraps(s) endgültig entfernt und können nach dem Löschen nicht wiederhergestellt werden!",
+          "subitems": [{
+               "key": "select_remove_bssource",
+               "desc": "Entfernen der installierten Bootstrap(s)"
+          }]
+     }]
+},{
+     "step_title": "Link-Variante",
+     "items": [{
+          "type": "singleselect",
+          "desc": "Bitte wählen Sie die gewünschte Link-Variante.",
+          "subitems": [{
+               "key": "select_symlink",
+               "desc": "Symbolischer Link",
+               "defaultValue": true,
+               "validator": {
+                    "fn": "{
+                         var v=arguments[0];
+                         if (!v) return true;
+                    }"
+               }
+          },{
+               "key": "select_mountbind",
+               "desc": "Bind Mount"
+          }]
+     }]
+},{
+     "step_title": "Pfadpriorität",
+     "items": [{
+          "type": "singleselect",
+          "desc": "Bitte wählen Sie die gewünschte Optware Pfadpriorität",
+          "subitems": [{
+               "key": "select_sbo",
+               "desc": "Synology vor Optware Pfad - Dateien im Synology Pfad werden bevorzugt",
+               "defaultValue": true,
+               "validator": {
+                    "fn": "{
+                         var v=arguments[0];
+                         if (!v) return true;
+                    }"
+               }
+          },{
+               "key": "select_obs",
+               "desc": "Optware vor Synology Pfad - Dateien im Optware Pfad werden bevorzugt"
+          }]
+     }]
+}]

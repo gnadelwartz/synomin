@@ -1,0 +1,4 @@
+. /usr/syno/bin/jsoncmd
+
+jdone
+exit 0

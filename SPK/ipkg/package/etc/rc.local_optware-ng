@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# Optware-ng setup
+# added detection of device with usb enabled volumes (synology router rt1900ac)
+# added extra condition to prevent uncontrolled mount of non existing "@optware" directory
+# added set the path priority depending on the selection
+#
+# create link if not exists
+USBSTATION=`/bin/get_key_value /etc.defaults/synoinfo.conf usbstation`
+USBVOLUME=`/bin/get_key_value /etc.defaults/synoinfo.conf support_usb_volume`
+BS_VOL=`readlink /var/packages/ebi/target | /usr/bin/cut -d '/' -f-2 2> /dev/null`
+[ "${USBSTATION}" == "yes" -a "${USBVOLUME}" == "yes" ] && BS_VOL=`/bin/ls -1 /volumeUSB?/usbshare*/@optware/bin/ipkg 2> /dev/null | /usr/bin/cut -d "/" -f1-3`
+if [ -f /var/packages/ebi/target/symlink -a ! -h /opt -a ! -d /opt ] ; then
+     /bin/rm -f /var/packages/ebi/target/error_creating_link
+     if [ -d ${BS_VOL}/@optware ] ; then
+        /bin/ln -s ${BS_VOL}/@optware /opt
+     else
+         /bin/touch /var/packages/ebi/target/error_creating_link
+     fi
+elif [ -f /var/packages/ebi/target/mountlink -a ! -h /opt ] ; then
+     /bin/rm -f /var/packages/ebi/target/error_creating_link
+     [ ! -d /opt ] && /bin/mkdir -m 755 /opt
+     if [ -d ${BS_VOL}/@optware ] ; then
+         [ `/bin/mount | /bin/grep -ic "/opt"` -eq 0 ] && /bin/mount --bind ${BS_VOL}/@optware /opt
+     else
+         /bin/touch /var/packages/ebi/target/error_creating_link
+     fi
+elif [ ! -h /opt -a ! -d /opt ] ; then
+     /bin/touch /var/packages/ebi/target/error_creating_link
+fi
+
+# comment out the 1st occurrence of PATH= and export PATH if not already done
+/bin/cat /root/.profile | /usr/bin/awk 'NR==1,/^#*?PATH=/{sub(/^PATH=/,"#PATH=")} 1' > /root/.profile_
+/bin/cat /root/.profile_ | /usr/bin/awk 'NR==1,/^#*?export PATH/{sub(/^export PATH/,"#export PATH")} 1' > /root/.profile
+/bin/rm /root/.profile_
+
+# append path for /opt if not already done
+if ! /bin/grep '^PATH=.*/opt/bin' /root/.profile >/dev/null 2>&1 ; then
+     if [ -f /var/packages/ebi/target/sbo_priority ] ; then
+          echo -e "PATH=\$PATH:/opt/bin:/opt/sbin\nexport PATH" >> /root/.profile
+     else
+          echo -e "PATH=/opt/bin:/opt/sbin:\$PATH\nexport PATH" >> /root/.profile
+     fi
+fi
+
+exit 0

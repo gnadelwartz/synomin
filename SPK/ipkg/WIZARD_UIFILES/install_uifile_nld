@@ -1,0 +1,64 @@
+[{
+     "step_title": "Bootstrap selectie",
+     "items": [{
+          "type": "singleselect",
+          "desc": "U gebruikt Eenvoudige installatie bootstrap onder DSM < 5.0 - als gevolg van de beperkingen van het pakket het centrum van de beschikbaarheid kan alleen worden gecontroleerd na de bevestiging van de samenvatting.<br>Kies het gewenste pakket.",
+          "subitems": [{
+               "key": "select_optware",
+               "desc": "Optware(-ng) iPKG®"
+          }, {
+               "key": "select_entware",
+               "desc": "Entware-ng oPKG"
+          }]
+     }]
+},{
+     "step_title": "Bootstrap selectie",
+     "items": [{
+          "type": "multiselect",
+          "desc": "De momenteel geïnstalleerde bootstrap kunnen vooraf worden verwijderd of uitgeschakeld en herbenaam de bronmap (algemeen @optware, @qnapware of @entware).<br><b>Voorzichtig:</b> Met geactiveerde optie 'Verwijder geïnstalleerde bootstrap(s)', de vastgestelde bootstrap(s) permanent worden verwijderd en kan niet worden hersteld na het wissen!",
+          "subitems": [{
+               "key": "select_remove_bssource",
+               "desc": "Verwijder geïnstalleerde bootstrap(s)"
+          }]
+     }]
+},{
+     "step_title": "Verbinding variant",
+     "items": [{
+          "type": "singleselect",
+          "desc": "Selecteer de gewenste verbinding variant.",
+          "subitems": [{
+               "key": "select_symlink",
+               "desc": "Symbolische Link",
+               "defaultValue": true,
+               "validator": {
+                    "fn": "{
+                         var v=arguments[0];
+                         if (!v) return true;
+                    }"
+               }
+          },{
+               "key": "select_mountbind",
+               "desc": "Bind Mount"
+          }]
+     }]
+},{
+     "step_title": "Prioriteit pad",
+     "items": [{
+          "type": "singleselect",
+          "desc": "Selecteer de gewenste Optware prioriteit pad",
+          "subitems": [{
+               "key": "select_sbo",
+               "desc": "Synology voordat Optware pad - bestanden in Synology pad hebben de voorkeur",
+               "defaultValue": true,
+               "validator": {
+                    "fn": "{
+                         var v=arguments[0];
+                         if (!v) return true;
+                    }"
+               }
+          },{
+               "key": "select_obs",
+               "desc": "Optware voordat Synology pad - bestanden in Optware pad hebben de voorkeur"
+          }]
+     }]
+}]

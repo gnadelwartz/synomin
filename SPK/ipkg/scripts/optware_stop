@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Optware stop
+
+case $1 in
+stop)
+     for i in /opt/etc/init.d/S??* ;do
+
+          # Ignore dangling symlinks (if any).
+          [ ! -f "$i" ] && continue
+
+          case "$i" in
+               *.sh)
+               # Source shell script for speed.
+               (
+                    trap - INT QUIT TSTP
+                    set stop
+                    . $i
+               )
+          ;;
+               *)
+               # No sh extension, so fork subprocess.
+               $i stop
+          ;;
+          esac
+     done
+;;
+esac

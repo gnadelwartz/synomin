@@ -1,0 +1,69 @@
+Version 0.4-037 - 29/12/2017
+     - fixed: Users who do not have an appropriate language for the installation could not install EBI for the new CPU architectures (apollolake, broadwellnk, rtd1296)
+Version 0.4-036 - 02/10/2017
+     - added: Support for architecture 'apollolake' (DS218+, DS418play, DS718+, DS918+, x64)
+     - added: Support for architecture 'broadwellnk' (DS3018xs, x64)
+     - added: Support for architecture 'rtd1296' (DS418, DS418j - only 32bit, there is no native armv8 support yet by Optware-ng oder Entware-ng)
+Version 0.4-035 - 25/05/2017
+     - added: Support for architecture 'broadwell' (DS3617xs, RS3617xs+, FS2017, x64)
+     - added: Support for architecture 'grantley' (FS3017, x64)
+Version 0.4-034 - 07/09/2016
+     - fixed: wrong url and path for architecture 'armada38x'
+Version 0.4-033 - 08/06/2016
+     - added: Support for DSM 3.2 or higher, this is a complete installation with scaled-down wizard functions, because in DSM < 5.0 a essential wizard function is missing. due to this limitations of the package center the availability of a bootstrap and other checks can only be performed after confirmation of the summary (preinst).
+     - added: Selection of Optware path priority, you can choose between 'Synology before Optware path' or 'Optware before Synology path' (only for optware)
+     - added: Preselection of link variant 'bind mount' if VirtualBox is present
+Version 0.3-029 - 22/05/2016
+     - added: Optware-ng for powerpc e500v (ppc853x and ppc854x)
+Version 0.3-028 - 16/05/2016
+     - added: Support for architecture 'dockerx64' (DockerDSM, x64)
+     - added: Support for architecture 'kvmx64' (VirtualDSM, x64)
+Version 0.3-027 - 28/04/2016
+     - fixed: Additional installation of ipkg package for the old Optware ends in an endless installation
+Version 0.3-026 - 03/04/2016
+     - Besides the manual installation of Optware-ng an installation of the ipkg package is additionally performed by the package manager so that an update of the package manager will also be displayed.
+       This will also be fixed by updating the package, a new installation is not required.
+Version 0.3-025 - 28/02/2016
+     - updated: Feed url of Optware-ng, new location is now http://ipkg.nslu2-linux.org/optware-ng (see https://github.com/Optware/Optware-ng#attention)
+Version 0.3-024 - 13/02/2016
+     - fixed: Installation could not be performed because of a special character with an incorrect encoding. This only affected users, where the installation was displayed in english.
+Version 0.3-023 - 25/01/2016
+     - fixed: Installation of old Optware iPKG for powerpc based diskstations
+Version 0.3-022 - 30/12/2015
+     - Switched from Optware to Optware-ng (see https://github.com/alllexx88/Optware-ng#description)
+       # Thx for the suggestion BuFu https://www.cphub.net/?id=40&pid=493#comments #
+       Hint: The installation takes more time than any other bootstrap, because the locales have to be generated after installing.
+Version 0.3-020 - 21/12/2015
+     - Switched from Qnapware and Entware to Entware-ng (see http://forum.synology.com/enu/viewtopic.php?f=40&t=95346&start=270)
+     - added: Backup and restore of Entware-ng
+     - added: Support for architecture 'northstarplus' (RT1900ac, BCM58622, armv7) *** USB stick or SD card required ***
+     - added: Support for architecture 'armada38x' (DS216, 88F6820, armv7)
+     - added: User selectable link variant (symlink or bind mount)
+     - added: Specific support for VirtualBox - whether installing or uninstalling, the VirtualBox folder will remain until you uninstall VirtualBox.
+     - fixed: In some cases the wrong DiskStation model was displayed in the installer
+Version 0.3-016 - 19/11/2015
+     - Few language text corrections
+     - added: Support for architecture 'braswell' (DS716+, x86)
+Version 0.2-015 beta - 26/10/2015
+     - Small fixes
+     - added: Support for architecture 'monaco' (DS216play, armv7)
+     - Users can now choose between disabling (rename) or complete removal of existing bootstraps before installing
+Version 0.2-014 beta - 03/10/2015
+     - added: User selectable deactivation (not removal) of nearly all old bootstrap types before the installation is performed. The package manager source directory (@optware or @qnapware) will be renamed, all other configuration files are removed.
+     - Installation is now possible if a folder or symlink /opt or /volume(x)/@optware exists and don't owned by a active package manager. With a user selectable option the existing /opt or /volume(x)@optware will be integrated into the package manager directory or renamed to opt_#timestamp# resp _optware_#timestamp#.
+     - fixed: rc.local code to create symlink based on installed volume
+     - Further optimizations
+Version 0.2-013 beta - 30/08/2015
+     - added: Possibility to backup and restore the bootstrap folder @optware or @qnapware via DSM Backup & Replication
+Version 0.2-012 beta - 29/08/2015
+     - added: Optionally removing of bootstrap during uninstall
+Version 0.2-011 beta - 27/08/2015
+     - fixed: Small bug, that prevent install of Entware without error
+Version 0.1-010 beta - 26/08/2015
+     - added: Advanced prerequisite checks
+     - added: Extra checks after download and install
+     - added: Support to install on the selected volume
+     - fixed: Wrong path typo on install of Entware
+     - fixed: rc.local code
+Version 0.1-009 beta - 22/08/2015
+     - First public beta

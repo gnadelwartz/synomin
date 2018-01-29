@@ -1,0 +1,11 @@
+[{
+	"step_title": "Supprimer bootstrap",
+	"items": [{
+		"type": "multiselect",
+		"desc": "Le bootstrap est définitivement supprimé et ne peut être récupéré après la suppression. Dans le répertoire 'opt, Apps, @optware, @entware ou @qnapware' contenait les fichiers et répertoires, avec l'exception du sous-répertoire 'VirtualBox' existant, sera également supprimée!",
+		"subitems": [{
+			"key": "pkgwizard_remove_bootstrap",
+			"desc": "Supprimer bootstrap<br>S'il vous plaît finir une cours d'exécution éventuellement VirtualBox, avant de procéder à la désinstallation des bootstrap!"
+		}]
+	}]
+}]
