@@ -41,13 +41,18 @@ then
     cd ..
     
     # copy dummy iconv to usr/local/bin
-    # cp iconv /usr/local/bin
 	rm -f /opt/bin/iconv
     # cp addditional man pages
     mkdir -p /opt/man/man1
     cp ../man/man1/* /opt/man/man1/
+	# add local IP to /etc/hosts+
+	IP=`sed -n 's/IPADDR=//p' /etc/dhclient/ipv4/dhcpcd-eth0.info`
+	grep -q "${IP}" /etc/hosts 
+	if [ $? -ne 0 ] ; then
+	   sed  -i "1i ${IP} `hostname`" /etc/hosts
+	fi
     
-    echo "<br>cleanup ..."
+    echo "cleanup ..."
     rm -rf webmin*
 else
    echo "<p>Download of webmin failed!<p>"
