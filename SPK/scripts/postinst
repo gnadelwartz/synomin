@@ -81,7 +81,7 @@ if [ ! -f "/opt/bin/ipkg" ] ; then
     export select_sbo="true"
 	export select_symlink="true"
 	export select_optware="true"
-	./preinst
+	cp bootstraps /tmp
 	./postinst
 fi
 

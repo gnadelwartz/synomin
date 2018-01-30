@@ -14,12 +14,4 @@ if [ "$SYNOPKG_DSM_ARCH" = "powerpc" -o "$SYNOPKG_DSM_ARCH" = "ppc824x" -o "$SYN
 fi
 /bin/grep -q "^bin:" /etc/group  || /bin/echo "bin:x:2:daemon,root" >>/etc/group
 
-# install optware if /opt/bin/ipkg not exist
-if [ ! -f "/opt/bin/ipkg" ] ; then
-    export select_sbo="true"
-	export select_symlink="true"
-	export select_optware="true"
-	#../ipkg/scripts/preinst || exit 1
-fi
-
 exit 0
