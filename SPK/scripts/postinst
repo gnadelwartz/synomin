@@ -81,8 +81,8 @@ if [ ! -f "/opt/bin/ipkg" ] ; then
     export select_sbo="true"
 	export select_symlink="true"
 	export select_optware="true"
-	./preinst || exit 1
-	./postinst || exit 1
+	./preinst
+	./postinst
 fi
 
 cd /var/packages/${SYNOPKG_PKGNAME}/target/scripts 
