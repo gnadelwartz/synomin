@@ -1,0 +1,287 @@
+#!/bin/sh
+#********************************************************************#
+#  Easy Bootstrap Installer - Part 3                                 #
+#  Description: automatic bootstrap installer for synology nas       #
+#  Author:      QTip from the german Synology support forum          #
+#  Copyright:   2015-2016 by QTip                                    #
+#  License:     GNU GPLv3 (see LICENSE)                              #
+#  ----------------------------------------------------------------  #
+#  Version:     0.98 - 07/06/2016                                    #
+#  for more information check the changelog                          #
+#********************************************************************#
+
+[ -f /tmp/${SYNOPKG_PKGNAME}.upgrade ] && exit 0
+
+if [ -f `/usr/bin/dirname $0`/lang/${SYNOPKG_DSM_LANGUAGE} ] ; then
+     . `/usr/bin/dirname $0`/lang/${SYNOPKG_DSM_LANGUAGE}
+else
+     . `/usr/bin/dirname $0`/lang/enu
+fi
+
+# begin install routine
+PKG_VOL="`echo ${SYNOPKG_PKGDEST} | /usr/bin/cut -d'/' -f1-2`"
+PKG_TMP=/tmp
+PKG_VOL_TMP=/volume1/@tmp
+LOG="/var/packages/${SYNOPKG_PKGNAME}/log"
+TIMESTAMP="`/bin/date "+%s"`"
+SYNOUNIQUE=`/bin/get_key_value /etc.defaults/synoinfo.conf unique`
+SYNOARCH=`echo ${SYNOUNIQUE} | /usr/bin/cut -d "_" -f2`
+USBSTATION=`/bin/get_key_value /etc.defaults/synoinfo.conf usbstation`
+USBVOLUME=`/bin/get_key_value /etc.defaults/synoinfo.conf support_usb_volume`
+# detect device with usb enabled volumes (synology router rt1900ac)...
+if [ "${USBSTATION}" == "yes" -a "${USBVOLUME}" == "yes" ] ; then
+     # ...and determine the selected install path via environment
+     PKG_VOL_=`/usr/bin/env | /bin/grep "volumeUSB..usbshare" | /bin/grep "true" | /usr/bin/cut -d "=" -f1`
+     PKG_VOL=`echo "/${PKG_VOL_}" | /bin/sed 's/_/-/;s/\./\//g'`
+fi
+
+SYNOWGET="/usr/syno/bin/wget --no-check-certificate"
+# DSM >= 5.0
+if [ ${SYNOPKG_DSM_VERSION_BUILD} -ge 4458 ] ; then
+     SYNOWGET="/usr/bin/wget --no-check-certificate"
+fi
+
+[ -d /usr/local/etc/rc.d ] || /bin/mkdir -p /usr/local/etc/rc.d
+/bin/mkdir -p ${SYNOPKG_PKGDEST}/install
+cd ${SYNOPKG_PKGDEST}/install
+
+if [ -f ${PKG_TMP}/bootstraps ] ; then
+     BOOTSTRAPS=`/bin/get_key_value ${PKG_TMP}/bootstraps ${SYNOARCH}`
+     OPTFEED=`echo ${BOOTSTRAPS} | /usr/bin/cut -d "," -f1`
+     OPTINSTALLER=`echo ${BOOTSTRAPS} | /usr/bin/cut -d "," -f2`
+     ENTFEED=`echo ${BOOTSTRAPS} | /usr/bin/cut -d "," -f3`
+     ENTINSTALLER=`echo ${BOOTSTRAPS} | /usr/bin/cut -d "," -f4`
+else
+     /bin/rm -rf /var/packages/${SYNOPKG_PKGNAME}
+     /bin/rm -rf ${SYNOPKG_PKGDEST}
+     exit 1
+fi
+
+move_opt_back() {
+     if [ "${select_integratevbox}" == "true" -o "${select_integrate_bssource}" == "true" ] ; then
+          [ -e /opt ] || /bin/mkdir -p /opt
+          /bin/mv -f ${PKG_VOL_TMP}/ebi/* /opt
+     fi
+}
+
+get_optware() {
+     if [ "${OPTINSTALLER}" == "autodetect" ] ; then
+          ${SYNOWGET} -q ${OPTFEED}/Packages
+          OPTFILE=`/bin/cat Packages | /usr/bin/awk '/^Filename: ipkg-[static|opt]/ {print $2}'`
+          ${SYNOWGET} -q ${OPTFEED}/${OPTFILE} 2>/dev/null
+          WGETFILE=`/bin/cat Packages | /usr/bin/awk '/^Filename: wget_/ {print $2}'`
+          ${SYNOWGET} -q ${OPTFEED}/${WGETFILE} 2>/dev/null
+     elif [ -z "${OPTFEED}" -a -n "${OPTINSTALLER}" ] ; then
+          ${SYNOWGET} -q ${OPTINSTALLER} 2>/dev/null
+          OPTFILE="`/usr/bin/basename ${OPTINSTALLER}`"
+     else
+          ${SYNOWGET} -q ${OPTFEED}/Packages
+          ${SYNOWGET} -q ${OPTFEED}/${OPTINSTALLER} 2>/dev/null
+          OPTFILE="`/usr/bin/basename ${OPTINSTALLER}`"
+          WGETFILE=`/bin/cat Packages | /usr/bin/awk '/^Filename: wget_/ {print $2}'`
+          ${SYNOWGET} -q ${OPTFEED}/${WGETFILE} 2>/dev/null
+     fi
+     if [ $? != 0 -o ! -f ${OPTFILE} ] ; then
+          /bin/rm -rf /var/packages/${SYNOPKG_PKGNAME}
+          /bin/rm -rf ${SYNOPKG_PKGDEST}
+          echo ${PKG_BS_DOWNLOAD_ERROR} > ${SYNOPKG_TEMP_LOGFILE}
+          exit 1
+     fi
+}
+
+get_entware() {
+     ${SYNOWGET} -q ${ENTFEED}/${ENTINSTALLER} 2>/dev/null
+     ENTFILE="`/usr/bin/basename ${ENTINSTALLER}`"
+     if [ $? != 0 -o ! -f ${ENTFILE} ] ; then
+          /bin/rm -rf /var/packages/${SYNOPKG_PKGNAME}
+          /bin/rm -rf ${SYNOPKG_PKGDEST}
+          echo ${PKG_BS_DOWNLOAD_ERROR} > ${SYNOPKG_TEMP_LOGFILE}
+          exit 1
+     fi
+}
+
+pre_install() {
+     if [ "${select_optware}" == "true" ] ; then
+          BSTYPE="@optware"
+          if [ "${select_sbo}" == "true" ] ; then
+               /bin/touch ${SYNOPKG_PKGDEST}/sbo_priority
+          elif [ "${select_obs}" == "true" ] ; then
+               /bin/touch ${SYNOPKG_PKGDEST}/obs_priority
+          fi
+     elif [ "${select_entware}" == "true" ] ; then
+          BSTYPE="@entware"
+     fi
+     [ -e ${PKG_VOL}/${BSTYPE} ] && /bin/mv -f ${PKG_VOL}/${BSTYPE} ${PKG_VOL}/_${BSTYPE:1}_${TIMESTAMP}
+     [ -d ${PKG_VOL}/${BSTYPE} ] || /bin/mkdir -p ${PKG_VOL}/${BSTYPE}
+     [ -d ${PKG_VOL}/@tmp ] || /bin/mkdir -p -m 777 ${PKG_VOL}/@tmp
+     [ -e /opt ] && /bin/rm -rf /opt
+     if [ "${select_symlink}" == "true" ] ; then
+          [ ! -h /opt ] && /bin/ln -s ${PKG_VOL}/${BSTYPE} /opt
+          /bin/touch ${SYNOPKG_PKGDEST}/symlink
+     elif [ "${select_mountbind}" == "true" ] ; then
+          [ ! -d /opt ] && /bin/mkdir /opt
+          [ `/bin/mount | /bin/grep -ic "/opt"` -eq 0 ] && /bin/mount --bind ${PKG_VOL}/${BSTYPE} /opt
+          /bin/touch ${SYNOPKG_PKGDEST}/mountlink
+     fi
+     if [ $? != 0 -o ! -d ${PKG_VOL}/${BSTYPE} ] ; then
+          move_opt_back
+          /bin/rm -rf ${PKG_VOL}/${BSTYPE}
+          /bin/rm -rf /var/packages/${SYNOPKG_PKGNAME}
+          /bin/rm -rf ${SYNOPKG_PKGDEST}
+          echo ${PKG_BS_BIND_ERROR} > ${SYNOPKG_TEMP_LOGFILE}
+          exit 1
+     fi
+}
+
+install_optware() {
+     [ -d ${PKG_VOL}/@optware ] || /bin/mkdir -p ${PKG_VOL}/@optware
+     [ -d ${PKG_VOL}/@optware/etc/ipkg ] || /bin/mkdir -p ${PKG_VOL}/@optware/etc/ipkg
+     [ -d ${PKG_VOL}/@optware/lib/ipkg/lists ] || /bin/mkdir -p ${PKG_VOL}/@optware/lib/ipkg/lists
+     [ -d ${PKG_VOL}/@optware/tmp ] || /bin/mkdir -p -m 777 ${PKG_VOL}/@optware/tmp
+     [ -d ${PKG_VOL}/@optware/var/lib ] || /bin/mkdir -p ${PKG_VOL}/@optware/var/lib
+     if [ "${OPTINSTALLER}" == "autodetect" ] ; then
+          /bin/tar -xOvzf ${OPTFILE} ./data.tar.gz | /bin/tar -C ${PKG_VOL}/@tmp -xzvf -
+          /bin/cp -r ${PKG_VOL}/@tmp/opt/* ${PKG_VOL}/@optware
+          /bin/rm -r ${PKG_VOL}/@tmp/opt
+          [ -f ${SYNOPKG_PKGDEST}/install/Packages ] && /bin/mv -f ${SYNOPKG_PKGDEST}/install/Packages ${PKG_VOL}/@optware/lib/ipkg/lists/packages
+     else
+          /bin/chmod +x ${OPTFILE}
+          ./${OPTFILE} 2>/dev/null
+          [ `/bin/ls -1 ${PKG_VOL}/@optware/lib/ipkg/lists | /bin/wc -l` -eq 1 ] && /bin/mv -f ${PKG_VOL}/@optware/lib/ipkg/lists/* ${PKG_VOL}/@optware/lib/ipkg/lists/packages 2> /dev/null
+     fi
+     if [ ! -f ${PKG_VOL}/@optware/bin/?pkg ] ; then
+          move_opt_back
+          /bin/rm -rf ${PKG_VOL}/@optware
+          /bin/rm -rf /var/packages/${SYNOPKG_PKGNAME}
+          /bin/rm -rf ${SYNOPKG_PKGDEST}
+          echo ${PKG_BS_INSTALL_ERROR} > ${SYNOPKG_TEMP_LOGFILE}
+          exit 1
+     fi
+}
+
+install_entware() {
+     [ -d ${PKG_VOL}/@entware ] || /bin/mkdir -p ${PKG_VOL}/@entware
+     /bin/chmod +x ${ENTFILE}
+     ./${ENTFILE} 2>/dev/null
+     if [ ! -f ${PKG_VOL}/@entware/bin/opkg ] ; then
+          move_opt_back
+          /bin/rm -rf ${PKG_VOL}/@entware
+          /bin/rm -rf /var/packages/${SYNOPKG_PKGNAME}
+          /bin/rm -rf ${SYNOPKG_PKGDEST}
+          echo ${PKG_BS_INSTALL_ERROR} > ${SYNOPKG_TEMP_LOGFILE}
+          exit 1
+     fi
+}
+
+post_optware() {
+     if [ `echo ${OPTFILE} | /bin/grep -ic "static"` -eq 1 ] ; then
+          OPTTYPE="optware-ng_ipkg_installed"
+          BSTYPE="optware-ng"
+     else
+          OPTTYPE="optware_ipkg_installed"
+          BSTYPE="optware"
+     fi
+     if [ "${OPTINSTALLER}" == "autodetect" ] ; then
+          echo "dest /opt/ /" > /opt/etc/ipkg.conf
+          echo "src/gz packages ${OPTFEED}" > /opt/etc/ipkg/feeds.conf
+     elif [ -n "${OPTFEED}" -a -n "${OPTINSTALLER}" ] ; then
+          echo "src/gz packages ${OPTFEED}" > /opt/etc/ipkg/feeds.conf
+     elif [ -z "${OPTFEED}" -a -n "${OPTINSTALLER}" ] ; then
+          [ -d /opt/packages ] || /bin/mkdir -p /opt/packages
+          echo "src local file://opt/packages" > /opt/etc/ipkg/feeds.conf
+     fi
+     /bin/touch ${SYNOPKG_PKGDEST}/${OPTTYPE}
+     /bin/chmod 755 ${PKG_VOL}/@optware
+     /bin/chmod 755 ${PKG_VOL}/@optware/etc
+     /bin/chmod 755 ${PKG_VOL}/@optware/lib
+     /bin/chmod 755 ${PKG_VOL}/@optware/var
+     /bin/chmod 1777 ${PKG_VOL}/@optware/tmp
+     if [ "${USBSTATION}" == "yes" -a "${USBVOLUME}" == "yes" ] ; then
+          /bin/cp -f ${SYNOPKG_PKGDEST}/etc/rc.local_optware-ng /usr/local/etc/rc.d/S98rc.optware-ng.sh
+          /bin/cp -f ${SYNOPKG_PKGDEST}/etc/optware-ng.sh /usr/local/etc/rc.d/S99optware-ng.sh
+          /bin/chmod +x /usr/local/etc/rc.d/S98rc.optware-ng.sh
+          /bin/chmod +x /usr/local/etc/rc.d/S99optware-ng.sh
+          /usr/local/etc/rc.d/S98rc.optware-ng.sh
+     else
+          /bin/cp -f ${SYNOPKG_PKGDEST}/etc/rc.local_optware-ng /etc/rc.local
+          /bin/cp -f ${SYNOPKG_PKGDEST}/etc/optware-ng.sh /usr/local/etc/rc.d/optware-ng.sh
+          /bin/chmod +x /etc/rc.local
+          /bin/chmod +x /usr/local/etc/rc.d/optware-ng.sh
+          /etc/rc.local
+     fi
+     [ "${BSTYPE}" == "optware-ng" ] && /opt/bin/ipkg install ${OPTFILE}
+     [ -f ${WGETFILE} ] && /opt/bin/ipkg install ${WGETFILE}
+     /opt/bin/ipkg update
+     /opt/bin/ipkg install glibc-locale 2> /dev/null
+     /opt/bin/ipkg remove glibc-locale 2> /dev/null
+}
+
+post_entware() {
+     if [ "${USBSTATION}" == "yes" -a "${USBVOLUME}" == "yes" ] ; then
+          /bin/cp -f ${SYNOPKG_PKGDEST}/etc/rc.local_entware-ng /usr/local/etc/rc.d/S98rc.entware-ng.sh
+          /bin/cp -f ${SYNOPKG_PKGDEST}/etc/entware-ng.sh /usr/local/etc/rc.d/S99entware-ng.sh
+          /bin/chmod +x /usr/local/etc/rc.d/S98rc.entware-ng.sh
+          /bin/chmod +x /usr/local/etc/rc.d/S99entware-ng.sh
+          /usr/local/etc/rc.d/S98rc.entware-ng.sh
+     else
+          /bin/cp -f ${SYNOPKG_PKGDEST}/etc/rc.local_entware-ng /etc/rc.local
+          /bin/cp -f ${SYNOPKG_PKGDEST}/etc/entware-ng.sh /usr/local/etc/rc.d/entware-ng.sh
+          /bin/chmod +x /etc/rc.local
+          /bin/chmod +x /usr/local/etc/rc.d/entware-ng.sh
+          /etc/rc.local
+     fi
+     /bin/touch ${SYNOPKG_PKGDEST}/entware-ng_opkg_installed
+}
+
+post_all() {
+     date +"%c installed version ${SYNOPKG_PKGVER}<br>" >> $LOG
+     echo -e "Architecture\t\t: ${SYNOARCH}" >> $LOG
+}
+
+post_finish() {
+     if [ "${select_integratevbox}" == "true" -o "${select_integrate_bssource}" == "true" ] ; then
+          /bin/mv -f ${PKG_VOL_TMP}/ebi/* /opt
+     fi
+     /bin/rm -f ${PKG_TMP}/bootstraps
+     echo -e "Installed in\t\t\t: ${PKG_VOL}" >> $LOG
+     if [ -f ${SYNOPKG_PKGDEST}/symlink ] ; then
+          echo -e "Link method\t\t: Symbolic Link" >> $LOG
+     elif [ -f ${SYNOPKG_PKGDEST}/mountlink ] ; then
+          echo -e "Link method\t\t: Bind Mount" >> $LOG
+     fi
+     if [ "${select_optware}" == "true" ] ; then
+          if [ -f ${SYNOPKG_PKGDEST}/sbo_priority ] ; then
+               echo -e "Optware path priority\t: Synology before Optware path" >> $LOG
+          else
+               echo -e "Optware path priority\t: Optware before Synology path" >> $LOG
+          fi
+     fi
+}
+
+if [ "${select_optware}" == "true" ] ; then
+     # step3: download installer
+     get_optware
+     # step4: start installation
+     pre_install
+     install_optware
+     # step5: post processing
+     post_all
+     post_optware
+     BSTYPE="`/usr/bin/basename ${SYNOPKG_PKGDEST}/*_installed | /usr/bin/cut -d'_' -f1`"
+     BSTYPE=`echo ${BSTYPE:0:1} | /usr/bin/awk '{print toupper($0)}'`${BSTYPE:1}
+     echo -e "Bootstrap\t\t\t: ${BSTYPE}" >> $LOG
+     echo -e "Package manager\t: iPKG" >> $LOG
+elif [ "${select_entware}" == "true" ] ; then
+     # step3: download installer
+     get_entware
+     # step4: start installation
+     pre_install
+     install_entware
+     # step5: post processing
+     post_all
+     post_entware
+     echo -e "Bootstrap\t\t\t: Entware-ng" >> $LOG
+     echo -e "Package manager\t: oPKG" >> $LOG
+fi
+post_finish
+exit 0

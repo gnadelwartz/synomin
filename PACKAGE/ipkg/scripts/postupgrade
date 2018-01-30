@@ -1,0 +1,86 @@
+#!/bin/sh
+#********************************************************************#
+#  Easy Bootstrap Installer - Upgrade                                #
+#  Description: automatic bootstrap installer for synology nas       #
+#  Author:      QTip from the german Synology support forum          #
+#  Copyright:   2015-2016 by QTip                                    #
+#  License:     GNU GPLv3 (see LICENSE)                              #
+#  ----------------------------------------------------------------  #
+#  Version:     0.35 - 07/06/2016                                    #
+#  for more information check the changelog                          #
+#********************************************************************#
+
+LOG="/var/packages/${SYNOPKG_PKGNAME}/log"
+PKG_VOL_TMP="/`echo ${SYNOPKG_PKGDEST} | /usr/bin/cut -d'/' -f2`/@tmp"
+SYNOUNIQUE=`/bin/get_key_value /etc.defaults/synoinfo.conf unique`
+SYNOARCH=`echo ${SYNOUNIQUE} | /usr/bin/cut -d "_" -f2`
+USBSTATION=`/bin/get_key_value /etc.defaults/synoinfo.conf usbstation`
+USBVOLUME=`/bin/get_key_value /etc.defaults/synoinfo.conf support_usb_volume`
+BS_VOL=`readlink /var/packages/ebi/target | /usr/bin/cut -d '/' -f-2 2> /dev/null`
+
+[ -f ${PKG_VOL_TMP}/ebi/*_installed ] && /bin/mv -f ${PKG_VOL_TMP}/ebi/*_installed ${SYNOPKG_PKGDEST}
+[ -f ${PKG_VOL_TMP}/ebi/*link ] && /bin/mv -f ${PKG_VOL_TMP}/ebi/*link ${SYNOPKG_PKGDEST}
+[ -f ${PKG_VOL_TMP}/ebi/*_priority ] && /bin/mv -f ${PKG_VOL_TMP}/ebi/*_priority ${SYNOPKG_PKGDEST}
+
+# fix for installed the wrong optware-ng start script and created the wrong identification file
+# remove previously installed start script prior install of new one and rename the wrong identification file
+if [ `/bin/grep -ic "optware-ng" /opt/etc/ipkg/feeds.conf` -eq 1 ] ; then
+     /bin/mv -f ${SYNOPKG_PKGDEST}/optware_ipkg_installed ${SYNOPKG_PKGDEST}/optware-ng_ipkg_installed
+     /bin/rm -f /usr/local/etc/rc.d/optware.sh 2> /dev/null
+     /bin/rm -f /usr/local/etc/rc.d/S98rc.optware.sh 2> /dev/null
+     /bin/rm -f /usr/local/etc/rc.d/S99optware.sh 2> /dev/null
+fi
+
+BSTYPE=`/usr/bin/basename ${SYNOPKG_PKGDEST}/*_installed | /usr/bin/cut -d'_' -f1`
+# detect device with usb enabled volumes (synology router rt1900ac)...
+if [ "${USBSTATION}" == "yes" -a "${USBVOLUME}" == "yes" ] ; then
+     BS_VOL=`/bin/ls -1 /volumeUSB?/usbshare*/@???ware/bin/?pkg 2> /dev/null | /usr/bin/cut -d "/" -f1-3`
+     /bin/cp -f ${SYNOPKG_PKGDEST}/etc/rc.local_${BSTYPE} /usr/local/etc/rc.d/S98rc.${BSTYPE}.sh
+     /bin/cp -f ${SYNOPKG_PKGDEST}/etc/${BSTYPE}.sh /usr/local/etc/rc.d/S99${BSTYPE}.sh
+else
+     /bin/cp -f ${SYNOPKG_PKGDEST}/etc/rc.local_${BSTYPE} /etc/rc.local
+     /bin/cp -f ${SYNOPKG_PKGDEST}/etc/${BSTYPE}.sh /usr/local/etc/rc.d/${BSTYPE}.sh
+fi
+
+date +"%c updated to version ${SYNOPKG_PKGVER}<br>" >> $LOG
+echo -e "Architecture\t\t: ${SYNOARCH}" >> $LOG
+BSTYPE=`echo ${BSTYPE:0:1} | /usr/bin/awk '{print toupper($0)}'`${BSTYPE:1}
+echo -e "Bootstrap\t\t\t: ${BSTYPE}" >> $LOG
+if [ "${BSTYPE}" == "Optware" -o "${BSTYPE}" == "Optware-ng" ] ; then
+     echo -e "Package manager\t: iPKG" >> $LOG
+else
+     echo -e "Package manager\t: oPKG" >> $LOG
+fi
+echo -e "Installed in\t\t\t: ${BS_VOL}" >> $LOG
+if [ "${BSTYPE}" == "Qnapware" -o "${BSTYPE}" == "Entware" -o "${BSTYPE}" == "Optware" ] ; then
+     [ ! -f ${SYNOPKG_PKGDEST}/symlink ] && /bin/touch ${SYNOPKG_PKGDEST}/symlink
+fi
+if [ -f ${SYNOPKG_PKGDEST}/symlink -o -h /opt ] ; then
+     [ ! -f ${SYNOPKG_PKGDEST}/symlink ] && /bin/touch ${SYNOPKG_PKGDEST}/symlink
+     echo -e "Link method\t\t: Symbolic Link" >> $LOG
+elif [ -f ${SYNOPKG_PKGDEST}/mountlink -o -d /opt ] ; then
+     [ ! -f ${SYNOPKG_PKGDEST}/mountlink ] && /bin/touch ${SYNOPKG_PKGDEST}/mountlink
+     echo -e "Link method\t\t: Bind Mount" >> $LOG
+fi
+if [ "${BSTYPE}" == "Optware" -o "${BSTYPE}" == "Optware-ng" ] ; then
+     if [ -f ${SYNOPKG_PKGDEST}/sbo_priority ] ; then
+          echo -e "Optware path priority\t: Synology before Optware path" >> $LOG
+     else
+          echo -e "Optware path priority\t: Optware before Synology path" >> $LOG
+     fi
+fi
+
+# upgrade feed url for optware-ng
+if [ "${BSTYPE}" == "Optware-ng" ] ; then
+     /bin/sed -i 's#optware-ng\.zyxmon\.org#ipkg.nslu2-linux.org/optware-ng#' /opt/etc/ipkg/feeds.conf
+     /opt/bin/ipkg update
+fi
+
+# install ipkg package to get update notices
+if [ "${BSTYPE}" == "Optware-ng" ] ; then
+     if [ `/opt/bin/ipkg list_installed 2> /dev/null | /bin/grep -ic "ipkg-static"` -eq 0 ] ; then
+          (/bin/sleep 7; echo -e "\n") | /opt/bin/?pkg install ipkg-static
+     fi
+fi
+
+/bin/rm -f /tmp/${SYNOPKG_PKGNAME}.upgrade

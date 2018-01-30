@@ -1,0 +1,43 @@
+#!/bin/sh
+#********************************************************************#
+#  Easy Bootstrap Installer - Uninstall                              #
+#  Description: automatic bootstrap installer for synology nas       #
+#  Author:      QTip from the german Synology support forum          #
+#  Copyright:   2015-2016 by QTip                                    #
+#  License:     GNU GPLv3 (see LICENSE)                              #
+#  ----------------------------------------------------------------  #
+#  Version:     0.6 - 19/12/2015                                     #
+#  for more information check the changelog                          #
+#********************************************************************#
+
+[ -f /tmp/${SYNOPKG_PKGNAME}.upgrade ] && exit 0
+
+if [ -f `/usr/bin/dirname $0`/lang/${SYNOPKG_DSM_LANGUAGE} ] ; then
+     . `/usr/bin/dirname $0`/lang/${SYNOPKG_DSM_LANGUAGE}
+else
+     . `/usr/bin/dirname $0`/lang/enu
+fi
+. `/usr/bin/dirname $0`/lsof_lite
+
+PKG_VOL_TMP=/volume1/@tmp
+if [ "${pkgwizard_remove_bootstrap}" == "true" ] ; then
+     if [ -d /opt/VirtualBox ] ; then
+          . `/usr/bin/dirname $0`/lsof_lite
+          VBOXOPEN=$(lsof_lite "/opt/VirtualBox /volume?/@*ware/VirtualBox /volumeUSB?/usbshare*/@*ware/VirtualBox")
+          if [ -n "${VBOXOPEN}" ] ; then
+               echo "${PKG_OPENFILES_ERROR4} <b>/opt/VirtualBox</b> ${PKG_ERROR_PART4}<br>${PKG_OPENFILES_ERROR2}<br>&nbsp;&nbsp;${VBOXOPEN}" > ${SYNOPKG_TEMP_LOGFILE}
+               exit 1
+          else
+               /bin/mkdir -p ${PKG_VOL_TMP}/ebi
+               /bin/mv /opt/VirtualBox ${PKG_VOL_TMP}/ebi
+          fi
+     fi
+     if [ -x `/usr/bin/dirname $0`/remove_bootstrap ] ; then
+          `/usr/bin/dirname $0`/remove_bootstrap
+     else
+          if [ -d ${PKG_VOL_TMP}/ebi/VirtualBox ] ; then
+               /bin/mv ${PKG_VOL_TMP}/ebi/* /opt
+          fi
+          exit 1
+     fi
+fi

@@ -1,0 +1,64 @@
+[{
+     "step_title": "Bootstrap selection",
+     "items": [{
+          "type": "singleselect",
+          "desc": "You are using Easy Bootstrap Installer under DSM < 5.0 - due to the limitations of the package center the availability can only be checked after confirmation of the summary.<br>Please choose the desired package.",
+          "subitems": [{
+               "key": "select_optware",
+               "desc": "Optware(-ng) iPKG®"
+          }, {
+               "key": "select_entware",
+               "desc": "Entware-ng oPKG"
+          }]
+     }]
+},{
+     "step_title": "Bootstrap selection",
+     "items": [{
+          "type": "multiselect",
+          "desc": "The currently installed bootstrap can be previously removed or deactivated by renaming the source directory (typically @optware, @qnapware or @entware).<br><b>Attention:</b> With activated option 'Remove installed bootstrap(s)' the determined bootstraps will be permanently removed and can not be recovered after deletion!",
+          "subitems": [{
+               "key": "select_remove_bssource",
+               "desc": "Remove installed bootstrap(s)"
+          }]
+     }]
+},{
+     "step_title": "Link variant",
+     "items": [{
+          "type": "singleselect",
+          "desc": "Please select the desired link variant.",
+          "subitems": [{
+               "key": "select_symlink",
+               "desc": "Symbolic Link",
+               "defaultValue": true,
+               "validator": {
+                    "fn": "{
+                         var v=arguments[0];
+                         if (!v) return true;
+                    }"
+               }
+          },{
+               "key": "select_mountbind",
+               "desc": "Bind Mount"
+          }]
+     }]
+},{
+     "step_title": "Path priority",
+     "items": [{
+          "type": "singleselect",
+          "desc": "Please select the desired Optware path priority",
+          "subitems": [{
+               "key": "select_sbo",
+               "desc": "Synology before Optware path - files in Synology path are preferred",
+               "defaultValue": true,
+               "validator": {
+                    "fn": "{
+                         var v=arguments[0];
+                         if (!v) return true;
+                    }"
+               }
+          },{
+               "key": "select_obs",
+               "desc": "Optware before Synology path - files in Optware path are preferred"
+          }]
+     }]
+}]

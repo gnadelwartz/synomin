@@ -1,0 +1,44 @@
+# 08/10/2015 added monaco (DS216play, armv7)
+# 19/11/2015 added braswell (DS716+, x86)
+# 05/12/2015 added northstarplus (RT1900ac, armv7)
+# 11/12/2015 added armada38x (DS216, armv7)
+# 21/12/2015 switched from qnapware and entware to entware-ng (see http://forum.synology.com/enu/viewtopic.php?f=40&t=95346&start=270)
+# 30/12/2015 switched from optware to optware-ng (see https://github.com/alllexx88/Optware-ng#description)
+# 28/02/2016 changed url for optware-ng from http://optware-ng.zyxmon.org to http://ipkg.nslu2-linux.org/optware-ng
+# 16/05/2016 added dockerx64 (DockerDSM, x64) and kvmx64 (VirtualDSM, x64)
+# 22/05/2016 added optware-ng for ppc853x and ppc854x
+# 07/09/2016 fixed wrong url and path for architecture 'armada38x'
+# 25/05/2017 added broadwell and grantley (DS3617xs, RS3617xs+, FS2017, FS3017, x64)
+# 02/09/2017 added rtd1296 (DS118, DS218play, DS418, DS418j - only 32bit, there is no native armv8 support yet)
+# 17/09/2017 added apollolake (DS218+, DS418play, DS718+, DS918+, x64)
+# 02/10/2017 added broadwellnk (DS3018xs, FS1018, x64)
+88f5281="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armv5eabi-ng,autodetect,http://pkg.entware.net/binaries/armv5,installer/entware_install.sh"
+88f6281="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armv5eabi-ng,autodetect,http://pkg.entware.net/binaries/armv5,installer/entware_install.sh"
+88f6282="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armv5eabi-ng,autodetect,http://pkg.entware.net/binaries/armv5,installer/entware_install.sh"
+alpine="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+alpine4k="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+apollolake="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+armada370="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+armada375="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+armada38x="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+armadaxp="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+rtd1296="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+avoton="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+braswell="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+broadwell="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+broadwellnk="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+bromolow="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+cedarview="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+comcerto2k="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+evansport="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-32,installer/entware_install.sh"
+grantley="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+monaco="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+northstarplus="http://ipkg.nslu2-linux.org/optware-ng/buildroot-armeabihf,autodetect,http://pkg.entware.net/binaries/armv7,installer/entware_install.sh"
+powerpc="http://ipkg.nslu2-linux.org/feeds/optware/ds101g/cross/unstable,autodetect,,"
+ppc824x="http://ipkg.nslu2-linux.org/feeds/optware/ds101g/cross/unstable,autodetect,,"
+ppc853x="http://ipkg.nslu2-linux.org/optware-ng/ct-ng-ppc-e500v2,autodetect,,"
+ppc854x="http://ipkg.nslu2-linux.org/optware-ng/ct-ng-ppc-e500v2,autodetect,,"
+qoriq="http://ipkg.nslu2-linux.org/optware-ng/ct-ng-ppc-e500v2,autodetect,,"
+x86="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+kvmx64="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"
+dockerx64="http://ipkg.nslu2-linux.org/optware-ng/buildroot-i686,autodetect,http://pkg.entware.net/binaries/x86-64,installer/entware_install.sh"

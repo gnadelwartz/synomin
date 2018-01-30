@@ -1,0 +1,37 @@
+. /usr/syno/bin/jsoncmd
+
+BSHOME="${SYNOPKG_PKGPATH}/target"
+BSCONF="${BSHOME}/*_installed"
+PKG_VOL="/`/usr/bin/readlink ${BSHOME} | /usr/bin/cut -d'/' -f2`"
+
+IMPPATH=$(jget "${SYNOPKG_BKP_INPUT}" ".temp_path")
+if [ $? -ne 0 ]; then
+    jerr "Failed to get import path"
+    exit 1
+fi
+
+if [ ! -f ${BSCONF} ]; then
+     jerr "Failed to get package manager type"
+     exit 1
+fi
+
+BSCONFFILE="`/usr/bin/basename ${BSCONF}`"
+if [ ! -f "${IMPPATH}/${BSCONFFILE}" ]; then
+     jerr "Package manager type does not match installed type"
+     exit 1
+fi
+
+BSTYPE="`echo ${BSCONFFILE} | /usr/bin/cut -d'_' -f1`"
+if [ "${BSTYPE}" == "entware-ng" ] ; then
+     /bin/cp -af ${IMPPATH}/@entware ${PKG_VOL}
+elif [ "${BSTYPE}" == "entware" -o "${BSTYPE}" == "optware-ng" ] ; then
+     /bin/cp -af ${IMPPATH}/@optware ${PKG_VOL}
+else
+     /bin/cp -af ${IMPPATH}/@${BSTYPE} ${PKG_VOL}
+fi
+
+/etc/rc.local
+
+jdone
+
+exit 0

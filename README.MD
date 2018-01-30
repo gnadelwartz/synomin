@@ -1,8 +1,8 @@
 # Synology Disc Station Webmin package
 
-Since version 1.872 webmin supports Synology DMS 5.0+ out of the box
+since version 1.873 webmin supports Synology DMS 5.0+ and IKPG package manager out of the box.
 
-To be make it easyer for regular users I provide a SPK to install webmin
+to make it easyer for regular users I provide a SPK to install webmin
 
 ## build SPK
 
@@ -21,11 +21,12 @@ to install and use webmin on Synology Disc Station you have to install the Packa
 
 ## installation
 
+
 download [webmin-1.872-10.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.872-10.spk)
 
 - open synology package center and klick on "manual installation"
 
-- select your download `webmin-1.872-07.spk`
+- select your download [webmin-1.872-ipkg-06.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.872-ipkg-06.spk)
   and klick "install"
 
 after sucessfull installation you can access webnmin with your browser on port 10000, e.g. http://192.178.0.20:10000
@@ -48,6 +49,7 @@ after login with emergency user you can access only webmin user module to create
 
 ## advanced install
 
+
 First install all software packages recommended here, then download [webmin-1.872-10.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.872-10.spk)
 and install webmin.
 
@@ -57,18 +59,19 @@ Webmin is configured to support the following Synology installable packages:
 - `Webstation` (ngix, apache, php)
 - `Webalizer`
 
-to install the `ipkg` package manager, which provides more system commands and libs, add "https://www.cphub.net" as repository to you package manager and install `Easy Bootstrap Installer`. alternatively you can download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=677) and install it manually.
+`ipkg` optware-ng package manager, which provides more system commands and libs, is detected and installed automatically.
+alternatively you can download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=677) and install it manually before installing webmin.
 
 enable SSH access to your Synology under "System Setting -> Terminal" and SHH login to your Synology as `admin`.
 get root access with `sudo -i` as admin using the same password.
 
 list of installable packages with `ipkg list`, to install packages run `ipkg install <NAME>`.
 
-I recomend to install the following packages:
+the following packages will be installed automatically if ipkg is installed or detected:
 
 `ipkg install at coreutils git dstat man man-pages perl perl-net-ssleay`
 
-create the manual page index with (this may take a while):
+the manual page index is also automatically created (this may take a while):
 
 `makewhatis /opt/man /opt/share/man /volume1/@optware/man /volume1/@optware/share/man`
 

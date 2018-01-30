@@ -1,5 +1,6 @@
 #!/bin/sh
 #PATH="/opt/bin:/opt/sbin:$PATH"
+
 LOG="/var/packages/${SYNOPKG_PKGNAME}/log"
 WMTMP="\/`echo ${SYNOPKG_PKGDEST} | /usr/bin/cut -d'/' -f2`\/@tmp\/.webmin"
 WMCONFFILE="/var/packages/${SYNOPKG_PKGNAME}/target/etc/config"
@@ -73,6 +74,21 @@ if [ ! -f "/tmp/${SYNOPKG_PKGNAME}.upgrade" ] ; then
           /bin/cat /var/packages/${SYNOPKG_PKGNAME}/scripts/hint_en.txt > $SYNOPKG_TEMP_LOGFILE
      fi
 fi
+
+# install optware if /opt/bin/ipkg not exist
+if [ ! -f "/opt/bin/ipkg" ] ; then
+	cd /var/packages/${SYNOPKG_PKGNAME}/target/ipkg 
+    export select_sbo="true"
+	export select_symlink="true"
+	export select_optware="true"
+	./preinst
+	./postinst
+fi
+
 cd /var/packages/${SYNOPKG_PKGNAME}/target/scripts 
 ./install.sh >> $SYNOPKG_TEMP_LOGFILE 2>&1
-exit $?
+if [ $? == "0" ] ; then
+	sed -i '/Failed to determine/d' $SYNOPKG_TEMP_LOGFILE
+else
+	exit 1
+fi

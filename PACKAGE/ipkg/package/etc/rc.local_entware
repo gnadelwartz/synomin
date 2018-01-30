@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Entware setup
+#
+# create symbolic link if not exists
+BS_VOL=`readlink /var/packages/ebi/target | /usr/bin/cut -d '/' -f-2`
+[ ! -h /opt -a ! -d /opt ] && /bin/ln -s ${BS_VOL}/@optware /opt
+
+# comment out the 1st occurrence of PATH= and export PATH if not already done
+/bin/cat /root/.profile | /usr/bin/awk 'NR==1,/^#*?PATH=/{sub(/^PATH=/,"#PATH=")} 1' > /root/.profile_
+/bin/cat /root/.profile_ | /usr/bin/awk 'NR==1,/^#*?export PATH/{sub(/^export PATH/,"#export PATH")} 1' > /root/.profile
+/bin/rm /root/.profile_
+
+# append environment for /opt if not already done
+if ! /bin/grep '^\. /opt/etc/profile' /root/.profile >/dev/null 2>&1 ; then
+     echo -e "#setup entware environment\n. /opt/etc/profile" >> /root/.profile
+fi
+
+exit 0

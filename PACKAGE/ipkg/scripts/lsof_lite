@@ -1,0 +1,22 @@
+# call lsof_lite "path1 path2 ..."
+lsof_lite() {
+     local PATT=$1
+     local PATTERN=""
+     local RET=""
+     local RET_=""
+     for PT in ${PATT//,/} ; do
+           PATTERN="${PATTERN}${PT}|"
+     done
+     local LEN=${#PATTERN}
+     if [ ${LEN} -gt 0 ] ; then
+         PATTERN=${PATTERN::$((LEN-1))}
+     fi
+     for file in "/proc/*/fd/*" "/proc/*/exe" "proc/*/cwd"; do
+          RET_=`/usr/bin/realpath $file 2> /dev/null | /bin/grep -E "${PATTERN}"`
+          if [ -n "${RET_}" ] ; then
+               RET="${RET}${RET_}&nbsp;&nbsp;"
+               RET_=""
+          fi
+     done
+     echo "${RET}"
+}

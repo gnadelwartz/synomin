@@ -1,0 +1,64 @@
+[{
+     "step_title": "Sélection bootstrap",
+     "items": [{
+          "type": "singleselect",
+          "desc": "Vous utilisez Bootstrap d'installation simple sous DSM < 5.0 - en raison des limites du centre de package la disponibilité ne peut être vérifiée, après confirmation du résumé.<br>S'il vous plaît choisir le forfait désiré.",
+          "subitems": [{
+               "key": "select_optware",
+               "desc": "Optware(-ng) iPKG®"
+          }, {
+               "key": "select_entware",
+               "desc": "Entware-ng oPKG"
+          }]
+     }]
+},{
+     "step_title": "Sélection bootstrap",
+     "items": [{
+          "type": "multiselect",
+          "desc": "Le bootstrap actuellement installée peut être supprimé ou désactivé en le renommant avant le répertoire source (habituellement @optware, @qnapware ou @qnapware).<br><b>Attention:</b> Avec l'option activée 'Retirer installée bootstrap(s)' les bootstrap(s) déterminés sera définitivement supprimé et ne peut être récupéré après la suppression!",
+          "subitems": [{
+               "key": "select_remove_bssource",
+               "desc": "Retirer installée bootstrap(s)"
+          }]
+     }]
+},{
+     "step_title": "Variante de raccordement",
+     "items": [{
+          "type": "singleselect",
+          "desc": "S'il vous plaît sélectionner la variante de raccordement désiré.",
+          "subitems": [{
+               "key": "select_symlink",
+               "desc": "Lien symbolique",
+               "defaultValue": true,
+               "validator": {
+                    "fn": "{
+                         var v=arguments[0];
+                         if (!v) return true;
+                    }"
+               }
+          },{
+               "key": "select_mountbind",
+               "desc": "Bind Mount"
+          }]
+     }]
+},{
+     "step_title": "Priorité de chemin",
+     "items": [{
+          "type": "singleselect",
+          "desc": "S'il vous plaît sélectionner la priorité désirée chemin Optware",
+          "subitems": [{
+               "key": "select_sbo",
+               "desc": "Synology avant chemin Optware - les fichiers dans le chemin Synology sont préférés",
+               "defaultValue": true,
+               "validator": {
+                    "fn": "{
+                         var v=arguments[0];
+                         if (!v) return true;
+                    }"
+               }
+          },{
+               "key": "select_obs",
+               "desc": "Optware avant chemin Synology - les fichiers dans le chemin Optware sont préférés"
+          }]
+     }]
+}]
