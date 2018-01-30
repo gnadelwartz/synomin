@@ -14,11 +14,6 @@ start)
      if [ ! -f "$WMEnabled" ]; then
           exit 0
      fi
-     if [ "$WMPERL" != "$USEPERL" ] ; then
-          cd $WMPKG/bin
-          (find . -name '*.cgi' -print ; find . -name '*.pl' -print) | perl "perlpath.pl" $USEPERL -
-          echo $USEPERL > $WMPKG/etc/perl-path
-     fi
      cd $WMPKG/etc
      ./start
      exit 0

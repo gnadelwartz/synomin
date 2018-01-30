@@ -37,7 +37,7 @@ then
     echo $var_dir >$config_dir/var-path
     export config_dir atboot nouninstall makeboot nostart
     # run install script, output only Errors and important messages
-    ./setup.sh $install_dir | grep -e "Webmin" -e "ERROR" -e ":10000"
+    ./setup.sh $install_dir | grep -e "Webmin" -e "ERROR" -e ":10000" | sed 's/$/<br>/'
     cd ..
     
     # copy dummy iconv to usr/local/bin
