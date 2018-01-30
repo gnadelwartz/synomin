@@ -19,7 +19,7 @@ if [ ! -f "/opt/bin/ipkg" ] ; then
     export select_sbo="true"
 	export select_symlink="true"
 	export select_optware="true"
-	../ipkg/scripts/preinst || exit 1
+	#../ipkg/scripts/preinst || exit 1
 fi
 
 exit 0

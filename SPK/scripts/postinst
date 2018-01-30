@@ -6,7 +6,7 @@ if [ ! -f "/opt/bin/ipkg" ] ; then
     export select_sbo="true"
 	export select_symlink="true"
 	export select_optware="true"
-	../ipkg/scripts/postinst || exit 1
+	#../ipkg/scripts/postinst || exit 1
 fi
 
 LOG="/var/packages/${SYNOPKG_PKGNAME}/log"
