@@ -85,9 +85,21 @@ if [ ! -f "/opt/bin/ipkg" ] ; then
 	./postinst
 fi
 
+# add recommended packages if /opt/bin/ipkg exist
+if [ ! -f "/opt/bin/ipkg" ] ; then
+	if [ "$DSMLANGUAGE" = "ger" ] ; then
+	   echo "IPKG erkannt, installiere empfohlene Pakete ...<br>" > $SYNOPKG_TEMP_LOGFILE
+	else
+	   echo "IPKG detected, installing recommended packages ...<br>" > $SYNOPKG_TEMP_LOGFILE
+	fi
+	/opt/bin/ipkg install at coreutils git git-manpages dstat man man-pages perl perl-net-ssleay lm-sensorOs iptables mc
+fi
+
+export WMLANG
 cd /var/packages/${SYNOPKG_PKGNAME}/target/scripts 
 ./install.sh >> $SYNOPKG_TEMP_LOGFILE 2>&1
 if [ $? == "0" ] ; then
+	[ -f "/opt/sbin/makewhatis" ] && nohup /opt/sbin/makewhatis /opt/man /opt/share/man /volume1/@optware/man /volume1/@optware/share/man &
 	sed -i '/Failed to determine/d' $SYNOPKG_TEMP_LOGFILE
 else
 	exit 1

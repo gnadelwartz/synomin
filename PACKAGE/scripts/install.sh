@@ -23,7 +23,7 @@ then
     /bin/tar -xzf "$webmin.$tarext"
     rm "$webmin.$tarext"
 
-    echo "<br>start installation of `ls -d webmin*` ...<br>"
+    echo "<br>Start installation of `ls -d webmin*` ...<br>"
     
     cd webmin*
     #get enviroanment from config file and prepare non interactive install
@@ -35,6 +35,7 @@ then
     nouninstall="YES"
     echo $PERL >$config_dir/perl-path
     echo $var_dir >$config_dir/var-path
+	[ "$WMLANG" != '' ] && echo "$WNLANG" >>$config_dir/config
     export config_dir atboot nouninstall makeboot nostart
     # run install script, output only Errors and important messages
     ./setup.sh $install_dir | grep -e "Webmin" -e "ERROR" -e ":10000" | sed 's/$/<br>/'
@@ -52,7 +53,7 @@ then
 	   sed  -i "1i ${IP} `hostname`" /etc/hosts
 	fi
     
-    echo "cleanup ..."
+    echo "Cleanup ..."
     rm -rf webmin*
 else
    echo "<p>Download of webmin failed!<p>"
