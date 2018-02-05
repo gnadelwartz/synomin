@@ -9,8 +9,6 @@ if [ -x /opt/bin/perl ]
 then
 	# use ipkg perl if installed
 	PERL="/opt/bin/perl"
-	rm -rf /bin/perl /bin/cpan
-	ln -s /opt/bin/perl /bin/perl
 	ln -s /opt/bin/cpan /bin/cpan
 fi
 
