@@ -5,6 +5,14 @@ export PATH=$PATH:/opt/bin/:/opt/sbin
 
 # get path to perl executable
 PERL=`which perl`
+if [ -x /opt/bin/perl ]
+then
+	# use ipkg perl if installed
+	PERL="/opt/bin/perl"
+	rm -rf /bin/perl /bin/cpan
+	ln -s /opt/bin/perl /bin/perl
+	ln -s /opt/bin/cpan /bin/cpan
+fi
 
 # where to download webmin 
 webmin="webmin-current"
