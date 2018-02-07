@@ -86,7 +86,7 @@ if [ ! -f "/opt/bin/ipkg" ] ; then
 fi
 
 # add recommended packages if /opt/bin/ipkg exist
-if [ ! -f "/opt/bin/ipkg" ] ; then
+if [ -f "/opt/bin/ipkg" ] ; then
 	if [ "$DSMLANGUAGE" = "ger" ] ; then
 	   echo "IPKG erkannt, installiere empfohlene Pakete ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	else
