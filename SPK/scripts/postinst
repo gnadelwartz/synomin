@@ -75,24 +75,14 @@ if [ ! -f "/tmp/${SYNOPKG_PKGNAME}.upgrade" ] ; then
      fi
 fi
 
-# install optware if /opt/bin/ipkg not exist
-if [ ! -f "/opt/bin/ipkg" ] ; then
-	cd /var/packages/${SYNOPKG_PKGNAME}/target/ipkg/scripts 
-    export select_sbo="true"
-	export select_symlink="true"
-	export select_optware="true"
-	cp bootstraps /tmp
-	./postinst
-fi
-
 # add recommended packages if /opt/bin/ipkg exist
-if [ -f "/opt/bin/ipkg" ] ; then
+if [ -f "/opt/bin/ipkg" -a ! -f "/opt/bin/man"] ; then
 	if [ "$DSMLANGUAGE" = "ger" ] ; then
 	   echo "IPKG erkannt, installiere empfohlene Pakete ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	else
 	   echo "IPKG detected, installing recommended packages ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	fi
-	/opt/bin/ipkg install at coreutils git git-manpages dstat man man-pages lm-sensors iptables mc perl-net-ssleay
+	/opt/bin/ipkg install coreutils git git-manpages dstat man man-pages lm-sensors iptables mc perl-net-ssleay lsof gcc
 fi
 
 export WMLANG

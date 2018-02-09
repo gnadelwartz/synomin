@@ -9,7 +9,7 @@ if [ -x /opt/bin/perl ]
 then
 	# use ipkg perl if installed
 	PERL="/opt/bin/perl"
-	ln -s /opt/bin/cpan /bin/cpan
+	ln -s /opt/bin/cpan /bin/cpan 2>&1 1>/dev/null
 fi
 
 # where to download webmin 
@@ -44,11 +44,9 @@ then
 	[ "$WMLANG" != '' ] && echo "$WNLANG" >>$config_dir/config
     export config_dir atboot nouninstall makeboot nostart
     # run install script, output only Errors and important messages
-    ./setup.sh $install_dir | grep -e "Webmin" -e "ERROR" -e ":10000" | sed 's/$/<br>/'
+    ./setup.sh $install_dir | grep -e "Webmin" -e "ERROR" -e ":10000" -e "s/Use your web//"| sed 's/$/<br>/'
     cd ..
     
-    # copy dummy iconv to usr/local/bin
-	#rm -f /opt/bin/iconv
     # cp addditional man pages
     mkdir -p /opt/man/man1
     cp ../man/man1/* /opt/man/man1/
@@ -59,7 +57,6 @@ then
 	   sed  -i "1i ${IP} `hostname`" /etc/hosts
 	fi
     
-    echo "Cleanup ..."
     rm -rf webmin*
 else
    echo "<p>Download of webmin failed!<p>"

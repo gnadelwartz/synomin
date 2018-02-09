@@ -1,7 +1,7 @@
 # Webmin for Synology Disc Station
 
-Actual webmin supports Synology DMS 5.0+ and IKPG package manager out of the box.
-use this SPK to install the newest verion of webmin on your Synology Disc Station.
+Current  Webmin versions supports Synology DMS 5.0+ and IKPG package manager out of the box.
+this SPK to installs or upgrades to the newest Webmin version.
 
 ## Build SPK
 
@@ -15,13 +15,13 @@ clone github repository:
 
 ## Click and Point installation
 
-Login to you Disc Station on port 5000, go to Package Center and  install `Perl` and `Git server`.
+Login to your Disc Station on port 5000, go to Package Center and  install Synology packages `Perl` and `Git server`.
 then download [webmin-1.873-20.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.873-20.spk)
 
 - open Synology Package Center and klick on "manual installation"
 
 - select your already download [webmin-1.873-20.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.873-20.spk)
-  and klick "install"
+  , then klick "install"
 
 after sucessfull installation you can access webnmin with your browser on port 10000, e.g. http://192.178.0.20:10000
 
@@ -42,17 +42,16 @@ ussername: recovery
 password: webmin
 ```
 
-in case login as admin does not work, you can login as recovery, delete user admin and create a new user account to access webmin.
+In case you can not login as admin, login as user recovery, delete the admin user and create a new admin user to access webmin.
 do not forget to allow access to all modules to new admin user.
 
-you can access the emergency user only from local network (192.178.0.0/8) or localhost
-after login with emergency user you can access only webmin user module to create/modify users
+emergency user is allowed from local network (192.178.0.0/8) or localhost only.
 
 ## Advanced install
 
-
-To get most out of Webmin and you Synology Disc Station you can install the Community Package Manager 
-`ipkg`, which provides more system commands and libs. 
+To get most out of Webmin and Synology Disc Station you should install the Community Package Manager 
+`ipkg` instead of standard Synology packages `Perl` and `Git Server`. installing `ipkg`
+is only recommended for users with linux knowledge.
 
 - download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=677) and install before installing Webmin.
 - download [webmin-1.873-20.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.873-20.spk)
@@ -63,7 +62,15 @@ the following packages will be installed if ipkg is installed:
 
 `ipkg install coreutils git dstat man man-pages perl perl-net-ssleay mc lm-sensors lsof gcc`
 
-additional packages you may find useful:
+
+- to enable SSH access on Synology Disc Sytation go to "System Settings -> Terminal", check `SSH Service`.
+  now you can SHH login to your Synology and login as `admin`.
+- to run commands as root use  `sudo <command>` using the same password as admin.
+
+WARNING: running commands as user root can brick you Synology Disc Station!
+
+
+## Additional `ipkg` packages you may find useful to with Webmin:
 
 
 ```
