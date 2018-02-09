@@ -1,7 +1,7 @@
 # Webmin for Synology Disc Station
 
 Current  Webmin versions supports Synology DMS 5.0+ and IKPG package manager out of the box.
-this SPK to installs or upgrades to the newest Webmin version.
+this SPK installs or upgrades to the newest Webmin version.
 
 ## Build SPK
 
@@ -43,13 +43,13 @@ password: webmin
 ```
 
 In case you can not login as admin, login as user recovery, delete the admin user and create a new admin user to access webmin.
-do not forget to allow access to all modules to new admin user.
+do not forget allowing access to all modules for new admin user.
 
 emergency user is allowed from local network (192.178.0.0/8) or localhost only.
 
 ## Advanced install
 
-To get most out of Webmin and Synology Disc Station you should install the Community Package Manager 
+If you want to get most out of Webmin and Synology Disc Station, install the Community Package Manager 
 `ipkg` instead of standard Synology packages `Perl` and `Git Server`. installing `ipkg`
 is only recommended for users with linux knowledge.
 
@@ -110,7 +110,7 @@ zip - 3.0-1 - a compression and file packaging utility.
 zoo - 2.10-1 - zoo - File archiving utility with compression
 ```
 
-## history
+## History
 
 The Package is based on QTip Webmin 1.600 SPK, but heavily modified to automatically
 download the newest webmimin package from webmin.com and install needed system commands. settings are changed
