@@ -9,7 +9,7 @@ if [ -x /opt/bin/perl ]
 then
 	# use ipkg perl if installed
 	PERL="/opt/bin/perl"
-	ln -s /opt/bin/cpan /bin/cpan 2>&1 1>/dev/null
+	ln -sf /opt/bin/cpan /bin/cpan 2>&1 1>/dev/null
 fi
 
 # where to download webmin 
