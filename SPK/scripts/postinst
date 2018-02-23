@@ -83,7 +83,7 @@ if [ -f "/opt/bin/ipkg" -a ! -f "/opt/bin/man"] ; then
 	   echo "IPKG detected, installing recommended packages ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	fi
 	/opt/bin/ipkg install coreutils git git-manpages dstat man man-pages lm-sensors iptables mc perl-net-ssleay lsof gcc make
-	[ "`ipkg list-installed perl-net-ssleay`" != "" ] && echo "ssl=1" >/var/packages/${SYNOPKG_PKGNAME}/target/etc/config
+	[ "`ipkg list-installed perl-net-ssleay`" != "" ] && echo "ssl=1" >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.conf
 fi
 
 export WMLANG
