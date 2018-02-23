@@ -76,7 +76,7 @@ if [ ! -f "/tmp/${SYNOPKG_PKGNAME}.upgrade" ] ; then
 fi
 
 # add recommended packages if /opt/bin/ipkg exist
-if [ -f "/opt/bin/ipkg" -a ! -f "/opt/bin/man"] ; then
+if [ -f "/opt/bin/ipkg" ] ; then
 	if [ "$WMLANG" = "de" ] ; then
 	   echo "IPKG erkannt, installiere empfohlene Pakete ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	else
