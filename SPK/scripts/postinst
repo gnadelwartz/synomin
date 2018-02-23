@@ -68,7 +68,7 @@ ptg)
 esac
 if [ ! -f "/tmp/${SYNOPKG_PKGNAME}.upgrade" ] ; then
      mkdir -p /var/log/webmin/output
-     if [ "$DSMLANGUAGE" = "ger" ] ; then
+     if [ "$WMLANG" = "de" ] ; then
           /bin/cat /var/packages/${SYNOPKG_PKGNAME}/scripts/hint_de.txt > $SYNOPKG_TEMP_LOGFILE
      else
           /bin/cat /var/packages/${SYNOPKG_PKGNAME}/scripts/hint_en.txt > $SYNOPKG_TEMP_LOGFILE
@@ -77,12 +77,13 @@ fi
 
 # add recommended packages if /opt/bin/ipkg exist
 if [ -f "/opt/bin/ipkg" -a ! -f "/opt/bin/man"] ; then
-	if [ "$DSMLANGUAGE" = "ger" ] ; then
+	if [ "$WMLANG" = "de" ] ; then
 	   echo "IPKG erkannt, installiere empfohlene Pakete ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	else
 	   echo "IPKG detected, installing recommended packages ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	fi
 	/opt/bin/ipkg install coreutils git git-manpages dstat man man-pages lm-sensors iptables mc perl-net-ssleay lsof gcc make
+	[ "`ipkg list-installed perl-net-ssleay`" != "" ] && echo "ssl=1" >/var/packages/${SYNOPKG_PKGNAME}/target/etc/config
 fi
 
 export WMLANG

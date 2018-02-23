@@ -41,7 +41,6 @@ then
     nouninstall="YES"
     echo $PERL >$config_dir/perl-path
     echo $var_dir >$config_dir/var-path
-	[ "$WMLANG" != '' ] && echo "$WNLANG" >>$config_dir/config
     export config_dir atboot nouninstall makeboot nostart
     # run install script, output only Errors and important messages
     ./setup.sh $install_dir | grep -e "Webmin" -e "ERROR" -e ":10000" -e "s/Use your web//"| sed 's/$/<br>/'
