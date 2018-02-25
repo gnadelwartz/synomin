@@ -16,11 +16,11 @@ clone github repository:
 ## Click and Point installation
 
 Login to your Disc Station on port 5000, go to Package Center and  install Synology packages `Perl` and `Git server`.
-then download [webmin-1.873-25.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.873-25.spk)
+then download [webmin-1.880.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.880.spk)
 
 - open Synology Package Center and klick on "manual installation"
 
-- select your already download [webmin-1.873-25.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.873-25.spk)
+- select your already download [webmin-1.880.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.880.spk)
   , then klick "install"
 
 after sucessfull installation you can access webnmin with your browser on port 10000, e.g. http://192.178.0.20:10000
@@ -54,7 +54,7 @@ If you want to get most out of Webmin and Synology Disc Station, install the Com
 is only recommended for users with linux knowledge.
 
 - download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=677) and install before installing Webmin.
-- download [webmin-1.873-25.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.873-25.spk)
+- download [webmin-1.880.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.880.spk)
 and install webmin.
 
 Webmin automatically detects if IPKG is installed and use it.
