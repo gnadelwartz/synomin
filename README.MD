@@ -6,16 +6,6 @@ this SPK installs or upgrades to the newest Webmin version.
 Webmin Version 1.880 is the first offical release with full Synonoly Disc Station support.
 If the IPKG Package Manager is installed webmin uses https:// protocol (see Advanced Install).
 
-## Build SPK
-
-clone github repository:
-
-`git clone https://github.com/gnadelwartz/synomin.git`
-
-`cd synomin`
-
-`./makespk.sh`
-
 ## Click and Point installation
 
 Login to your Disc Station on port 5000, go to Package Center and  install Synology packages `Perl` and `Git server`.
@@ -83,7 +73,20 @@ the following packages will be installed if ipkg is installed:
 WARNING: running commands as user root can brick you Synology Disc Station!
 
 
-## Additional `ipkg` packages you may find useful to with Webmin:
+## Build SPK
+
+Clone github repository and run `makespk.sh`:
+
+```
+git clone https://github.com/gnadelwartz/synomin.git
+
+cd synomin
+./makespk.sh
+```
+
+To sign Package with your own Key follow the [instructions from Qtip](http://www.synology-forum.de/showthread.html?58583-HowTo-Pakete-signieren)
+
+## Additional Packages you may install from Webmin bultin Software Package Manager:
 
 
 ```
