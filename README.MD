@@ -38,6 +38,16 @@ Webmin is configured to support the following Synology installable packages:
 - `Webstation` (ngix, apache, php)
 - `Webalizer`
 
+## Upgrade from older Version
+
+To upgrade from an already installed older SPK you can simply
+download [webmin-1.880.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.880.spk)
+and install it. It will always download the lastest official Webmin Release.
+
+You can upgrade also direct from Qtip's Webmin 1.600 SPK, if you want to keep your modified Webmin Settings.
+Nevertheless I suggest to remove it first to get the latest default config to have as much as possible modules
+enabled.
+
 ## Webmin emergency user:
 
 ```
