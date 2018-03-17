@@ -83,7 +83,7 @@ if [ -f "/opt/bin/ipkg" ] ; then
 	   echo "IPKG detected, installing recommended packages ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	fi
 	/opt/bin/ipkg install coreutils git git-manpages dstat man man-pages lm-sensors iptables mc perl-net-ssleay lsof gcc make
-	sed -i 's/ssl=.*/ssl=1/' /var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.conf
+	/bin/sed -i 's/ssl=.*/ssl=1/' /var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.conf
 fi
 
 export WMLANG
@@ -91,7 +91,7 @@ cd /var/packages/${SYNOPKG_PKGNAME}/target/scripts
 ./install.sh >> $SYNOPKG_TEMP_LOGFILE 2>&1
 if [ $? == "0" ] ; then
 	[ -f "/opt/sbin/makewhatis" ] && nohup /opt/sbin/makewhatis /opt/man /opt/share/man /volume1/@optware/man /volume1/@optware/share/man &
-	sed -i '/Failed to determine/d' $SYNOPKG_TEMP_LOGFILE
+	/bin/sed -i '/Failed to determine/d' $SYNOPKG_TEMP_LOGFILE
 else
 	exit 1
 fi

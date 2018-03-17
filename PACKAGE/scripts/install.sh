@@ -33,9 +33,9 @@ then
     
     cd webmin*
     #get enviroanment from config file and prepare non interactive install
-    install_dir=`grep "^root=" ${MINICONF}| sed 's/.*root=//'`
-    config_dir=`grep "env_WEBMIN_CONFIG=" ${MINICONF}| sed 's/.*_WEBMIN_CONFIG=//'`
-    var_dir=`grep "env_WEBMIN_VAR=" ${MINICONF}| sed 's/.*_WEBMIN_VAR=//'`
+    install_dir=`/bin/grep "^root=" ${MINICONF}| /bin/sed 's/.*root=//'`
+    config_dir=`/bin/grep "env_WEBMIN_CONFIG=" ${MINICONF}| /bin/sed 's/.*_WEBMIN_CONFIG=//'`
+    var_dir=`/bin/grep "env_WEBMIN_VAR=" ${MINICONF}| /bin/sed 's/.*_WEBMIN_VAR=//'`
     atboot="NO"
     makeboot="NO"
     nouninstall="YES"
@@ -43,17 +43,17 @@ then
     echo $var_dir >$config_dir/var-path
     export config_dir atboot nouninstall makeboot nostart
     # run install script, output only Errors and important messages
-    ./setup.sh $install_dir | grep -e "Webmin" -e "ERROR" -e ":10000" -e "s/Use your web//"| sed 's/$/<br>/'
+    ./setup.sh $install_dir | /bin/grep -e "Webmin" -e "ERROR" -e ":10000" -e "s/Use your web//"| /bin/sed 's/$/<br>/'
     cd ..
     
     # cp addditional man pages
     mkdir -p /opt/man/man1
     cp ../man/man1/* /opt/man/man1/
 	# add local IP to /etc/hosts+
-	IP=`sed -n 's/IPADDR=//p' /etc/dhclient/ipv4/dhcpcd-eth0.info`
-	grep -q "${IP}" /etc/hosts 
+	IP=`/bin/sed -n 's/IPADDR=//p' /etc/dhclient/ipv4/dhcpcd-eth0.info`
+	/bin/grep -q "${IP}" /etc/hosts 
 	if [ $? -ne 0 ] ; then
-	   sed  -i "1i ${IP} `hostname`" /etc/hosts
+	   /bin/sed  -i "1i ${IP} `hostname`" /etc/hosts
 	fi
     
     rm -rf webmin*
