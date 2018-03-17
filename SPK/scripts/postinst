@@ -82,8 +82,11 @@ if [ -f "/opt/bin/ipkg" ] ; then
 	else
 	   echo "IPKG detected, installing recommended packages ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	fi
+	# needed is: git dstat lm-sensors per-net-ssleay, all other are opional
 	/opt/bin/ipkg install coreutils git git-manpages dstat man man-pages lm-sensors iptables mc perl-net-ssleay lsof gcc make
+	# activate SSL and redirect to ssl 
 	/bin/sed -i 's/ssl=.*/ssl=1/' /var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.conf
+	echo "ssl_redirect=1" >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.conf
 fi
 
 export WMLANG
