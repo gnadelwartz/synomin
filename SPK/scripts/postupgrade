@@ -19,11 +19,11 @@ OLD_SPK_VERSION="1.880" # here I need the version of package we are upgrading FR
 /bin/cat 'recovery: backup-config webmin acl' >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/webmin.acl
 /bin/cat /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/miniserv.recovery  >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.users
 
-# reset some config when updating from old Qtip SPK
  if [ "${OLD_SPK_VERSION}" -lt 1.800 ] ; then
-    /bin/cp -r /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/* /var/packages/${SYNOPKG_PKGNAME}/target/etc
+    # copy everthing from update dir to package target if old SPK
+    /bin/cp -r /var/packages/${SYNOPKG_PKGNAME}/target/update/* /var/packages/${SYNOPKG_PKGNAME}/target
 else
-    # copy only admin and recovery acl files
+    # copy only acl files
     /bin/cp /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/*.acl /var/packages/${SYNOPKG_PKGNAME}/target/etc
 fi
 
