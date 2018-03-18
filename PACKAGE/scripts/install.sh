@@ -9,7 +9,7 @@ if [ -x /opt/bin/perl ]
 then
 	# use ipkg perl if installed
 	PERL="/opt/bin/perl"
-	ln -sf /opt/bin/cpan /bin/cpan 2>&1 1>/dev/null
+	/bin/ln -sf /opt/bin/cpan /bin/cpan 2>&1 1>/dev/null
 fi
 
 # where to download webmin 
@@ -27,7 +27,7 @@ if [ -f "$webmin.$tarext" ]
 then
     # echo "<br>unpacking webmin ..."
     /bin/tar -xzf "$webmin.$tarext"
-    rm "$webmin.$tarext"
+    /bin/rm "$webmin.$tarext"
 
     echo "<br>Start installation of `ls -d webmin*` ...<br>"
     
@@ -47,8 +47,8 @@ then
     cd ..
     
     # cp addditional man pages
-    mkdir -p /opt/man/man1
-    cp ../man/man1/* /opt/man/man1/
+    /bin/mkdir -p /opt/man/man1
+    /bin/cp ../man/man1/* /opt/man/man1/
 	# add local IP to /etc/hosts+
 	IP=`/bin/sed -n 's/IPADDR=//p' /etc/dhclient/ipv4/dhcpcd-eth0.info`
 	/bin/grep -q "${IP}" /etc/hosts 
@@ -56,7 +56,7 @@ then
 	   /bin/sed  -i "1i ${IP} `hostname`" /etc/hosts
 	fi
     
-    rm -rf webmin*
+    /bin/rm -rf webmin*
 else
    echo "<p>Download of webmin failed!<p>"
    exit 1

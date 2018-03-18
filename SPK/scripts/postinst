@@ -67,6 +67,7 @@ ptg)
 ;;
 esac
 if [ ! -f "/tmp/${SYNOPKG_PKGNAME}.upgrade" ] ; then
+     # first install
      mkdir -p /var/log/webmin/output
      if [ "$WMLANG" = "de" ] ; then
           /bin/cat /var/packages/${SYNOPKG_PKGNAME}/scripts/hint_de.txt > $SYNOPKG_TEMP_LOGFILE

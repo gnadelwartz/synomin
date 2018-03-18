@@ -10,5 +10,22 @@ sleep 1
 /bin/mv -f ${PKG_VOL_TMP}/webmin/log /var/log/webmin
 /bin/mv -f ${PKG_VOL_TMP}/webmin/* $WMPKG
 sleep 1
+
+OLD_SPK_VERSION="1.880" # here I need the version of package we are upgrading FROM!
+
+# restore admin and recovery acl and recovery password
+/bin/sed -i -e 's/^admin: .*/admin: */' -e '/^recovery: /d' /var/packages/${SYNOPKG_PKGNAME}/target/etc/webmin.acl
+/bin/sed -i -e '/^recovery:/d' /var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.users
+/bin/cat 'recovery: backup-config webmin acl' >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/webmin.acl
+/bin/cat /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/miniserv.recovery  >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.users
+
+# reset some config when updating from old Qtip SPK
+ if [ "${OLD_SPK_VERSION}" -lt 1.800 ] ; then
+    /bin/cp -r /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/* /var/packages/${SYNOPKG_PKGNAME}/target/etc
+else
+    # copy only admin and recovery acl files
+    /bin/cp /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/*.acl /var/packages/${SYNOPKG_PKGNAME}/target/etc
+fi
+
 /bin/rm -f /tmp/${SYNOPKG_PKGNAME}.upgrade
 date +"%c updated to version ${SYNOPKG_PKGVER}<br>" >> $LOG
