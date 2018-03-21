@@ -4,7 +4,7 @@ Current  Webmin supports Synology DMS 5.0+ and IKPG/OPKG package manager out of 
 this SPK installs or upgrades to the newest Webmin version.
 
 Webmin Version 1.880 is the first offical release with full Synonoly Disc Station support.
-If the IPKG Package Manager is installed webmin uses https:// protocol (see Advanced Install).
+If the IPKG OPKG Package Manager is installed webmin uses https:// protocol (see Advanced Install).
 
 ## Click and Point installation
 
