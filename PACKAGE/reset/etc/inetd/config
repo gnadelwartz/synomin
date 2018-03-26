@@ -1,0 +1,14 @@
+services_file=/etc/services
+ipv6=0
+tcpd_path=/usr/sbin/tcpd
+extended_inetd=1
+show_empty=1
+restart_command=killall -HUP inetd
+rpc_file=/etc/rpc
+qm_mode=0
+rpc_inetd=1
+inetd_conf_file=/etc/inetd.conf
+sort_mode=0
+rpc_protocols=tcp udp
+protocols_file=/etc/protocols
+display_max=100

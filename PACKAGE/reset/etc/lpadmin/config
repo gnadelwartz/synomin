@@ -1,0 +1,14 @@
+driver_style=webmin
+iface_perms=755
+printcap_file=/etc/printcap
+gs_path=gs
+show_jobs=0
+sort_mode=0
+print_style=linux
+spool_dir=/var/spool/lpd
+display_mode=0
+gs_fontpath=
+show_status=0
+smbclient_path=smbclient
+gs_lib=
+iface_arg=

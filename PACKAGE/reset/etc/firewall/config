@@ -1,0 +1,16 @@
+cluster_mode=1
+before_cmd=
+view_comment=0
+filter_chain=
+after_apply_cmd=
+iface=
+save_file6=
+after_cmd=
+force_init=0
+direct6=
+view_condition=1
+before_apply_cmd=
+direct=0
+save_file=
+comment_mod=0
+perpage=

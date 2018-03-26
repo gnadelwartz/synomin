@@ -1,0 +1,7 @@
+mods=apache webmin
+nofiles=
+webmin_subs=0
+configfile=
+dest=/var/packages/webmin/target/backup/webmin_backup.tgz
+date_subs=0
+apply=1

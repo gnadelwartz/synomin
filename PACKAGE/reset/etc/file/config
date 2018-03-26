@@ -1,0 +1,21 @@
+xfs_attr=&has_command("attr")
+defuser=root
+nocharset=0
+hide_dot_files=0
+reiserfs_acl=&has_command("getfacl") && &has_command("setfacl")
+ext2_acl=&has_command("getfacl") && &has_command("setfacl")
+ext3_attr=&has_command("attr")
+ext4_ext=&has_command("lsattr") && &has_command("chattr")
+xfs_acl=&has_command("getfacl") && &has_command("setfacl")
+ext3_acl=&has_command("getfacl") && &has_command("setfacl")
+iconsize=0
+ext2_attr=&has_command("attr")
+defzip=0
+ext2_ext=&has_command("lsattr") && &has_command("chattr")
+getfacl=getfacl
+force_text=0
+extract=1
+ext4_attr=&has_command("attr")
+setfacl=setfacl --set-file=-
+ext4_acl=&has_command("getfacl") && &has_command("setfacl")
+ext3_ext=&has_command("lsattr") && &has_command("chattr")

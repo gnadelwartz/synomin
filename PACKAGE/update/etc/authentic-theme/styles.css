@@ -1,0 +1,8 @@
+#sidebar, body.session_login {
+    background-image: url(/unauthenticated/dsmWallpaper.jpg);
+    background-size: cover;
+    height: 100%;
+}
+html[data-background-style=gainsboro] .container:not(.form-signin-banner) {
+    background: transparent !important;
+}

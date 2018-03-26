@@ -1,0 +1,4 @@
+sarg_conf=/usr/local/sarg/sarg.conf
+naked=0
+clear=1
+sarg=sarg
