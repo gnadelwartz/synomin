@@ -1,15 +1,1 @@
-readonly=0
-feedback=0
-fileunix=root
-nodot=1
-uedit_mode=2
-uedit2=
-webminsearch=0
-uedit=admin
-gedit=
-otherdirs=
-gedit_mode=0
-rpc=0
-root=/
-negative=0
-gedit2=
+../../reset/etc/recovery.acl
