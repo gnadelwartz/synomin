@@ -18,9 +18,12 @@ tarext="tar.gz"
 # configuration files
 MINICONF=/var/packages/webmin/target/etc/miniserv.conf
 
-# download latest webmin
+# download latest webmin, fallback to download webmin ...
 echo "download latest webmin release ...<br>"
 /bin/wget -nv "https://www.webmin.com/download/$webmin.$tarext"
+if [ ! -f "$webmin.$tarext" ] ; then
+    /bin/wget -nv "http://download.webmin.com/devel/tarballs/$webmin.$tarext"
+fi
 
 # unpack and install
 if [ -f "$webmin.$tarext" ]
