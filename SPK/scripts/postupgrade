@@ -4,20 +4,25 @@ PKG_VOL_TMP="/`echo $SYNOPKG_PKGDEST | /usr/bin/cut -d'/' -f2`/@tmp"
 PKGVER="`echo ${SYNOPKG_PKGVER} | /usr/bin/cut -d "-" -f1`"
 WMPKG="/var/packages/webmin/target"
 
+# save new and important etc files
+(cd ${WMPKG}/etc; cp miniserv.conf start stop restart *.pl ${WMPKG}/update/etc )
+
 /bin/rm -fr $WMPKG/etc
 /bin/rm -fr $WMPKG/bin
 sleep 1
 /bin/mv -f ${PKG_VOL_TMP}/webmin/log /var/log/webmin
+$WEBMIN/etc/stop
+
 /bin/mv -f ${PKG_VOL_TMP}/webmin/* $WMPKG
 sleep 1
 
 # restore admin and recovery acl and recovery password
-/bin/sed -i -e 's/^admin: .*/admin: */' -e '/^recovery: /d' /var/packages/${SYNOPKG_PKGNAME}/target/etc/webmin.acl
-/bin/sed -i -e '/^recovery:/d' /var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.users
-/bin/cat 'recovery: backup-config webmin acl' >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/webmin.acl
-/bin/cat /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/miniserv.recovery  >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.users
-/bin/cp  -rL /var/packages/${SYNOPKG_PKGNAME}/target/update/etc /var/packages/${SYNOPKG_PKGNAME}/target
-/bin/cp  -rL /var/packages/${SYNOPKG_PKGNAME}/target/update/webmin /var/packages/${SYNOPKG_PKGNAME}/target
+/bin/sed -i -e 's/^admin: .*/admin: */' -e '/^recovery: /d' ${WMPKG}/etc/webmin.acl
+/bin/sed -i -e '/^recovery:/d' ${WMPKG}/etc/miniserv.users
+/bin/cat 'recovery: backup-config webmin acl' >>${WMPKG}/etc/webmin.acl
+/bin/cat ${WMPKG}/update/etc/miniserv.recovery  >>${WMPKG}/etc/miniserv.users
+/bin/cp  -rL ${WMPKG}/update/etc ${WMPKG}/
+/bin/cp  -rL ${WMPKG}/update/webmin ${WMPKG}/
 
 /bin/rm -f /tmp/${SYNOPKG_PKGNAME}.upgrade
 date +"%c updated to version ${SYNOPKG_PKGVER}<br>" >> $LOG
