@@ -5,7 +5,7 @@ PKGVER="`echo ${SYNOPKG_PKGVER} | /usr/bin/cut -d "-" -f1`"
 WMPKG="/var/packages/webmin/target"
 
 # save new and important etc files
-(cd ${WMPKG}/etc; cp miniserv.conf start stop restart *.pl ${WMPKG}/update/etc )
+(cd ${WMPKG}/etc; cp miniserv.conf start stop restart ${WMPKG}/update/etc )
 
 /bin/rm -fr $WMPKG/etc
 /bin/rm -fr $WMPKG/bin
@@ -19,7 +19,7 @@ sleep 1
 # restore admin and recovery acl and recovery password
 /bin/sed -i -e 's/^admin: .*/admin: */' -e '/^recovery: /d' ${WMPKG}/etc/webmin.acl
 /bin/sed -i -e '/^recovery:/d' ${WMPKG}/etc/miniserv.users
-/bin/cat 'recovery: backup-config webmin acl' >>${WMPKG}/etc/webmin.acl
+/bin/echo 'recovery: backup-config webmin acl' >>${WMPKG}/etc/webmin.acl
 /bin/cat ${WMPKG}/update/etc/miniserv.recovery  >>${WMPKG}/etc/miniserv.users
 /bin/cp  -rL ${WMPKG}/update/etc ${WMPKG}/
 /bin/cp  -rL ${WMPKG}/update/webmin ${WMPKG}/
