@@ -5,7 +5,7 @@ PKGVER="`echo ${SYNOPKG_PKGVER} | /usr/bin/cut -d "-" -f1`"
 WMPKG="/var/packages/webmin/target"
 
 # save new and important etc files
-(cd ${WMPKG}/etc; cp miniserv.conf start stop restart ${WMPKG}/update/etc )
+(cd ${WMPKG}/etc; cp config install_dir miniserv.conf start stop restart version *.sh *.pl ${WMPKG}/update/etc )
 
 /bin/rm -fr $WMPKG/etc
 /bin/rm -fr $WMPKG/bin
@@ -13,7 +13,7 @@ sleep 1
 /bin/mv -f ${PKG_VOL_TMP}/webmin/log /var/log/webmin
 $WEBMIN/etc/stop
 
-/bin/mv -f ${PKG_VOL_TMP}/webmin/* $WMPKG
+/bin/mv -f ${PKG_VOL_TMP}/webmin/etc $WMPKG
 sleep 1
 
 # restore admin and recovery acl and recovery password
@@ -23,6 +23,8 @@ sleep 1
 /bin/cat ${WMPKG}/update/etc/miniserv.recovery  >>${WMPKG}/etc/miniserv.users
 /bin/cp  -rL ${WMPKG}/update/etc ${WMPKG}/
 /bin/cp  -rL ${WMPKG}/update/webmin ${WMPKG}/
+# clear caches
+rm ${WMPKG}/etc/*.cache ${WMPKG}/etc/*.descs ${WMPKG}/etc/*.cats
 
 /bin/rm -f /tmp/${SYNOPKG_PKGNAME}.upgrade
 date +"%c updated to version ${SYNOPKG_PKGVER}<br>" >> $LOG
