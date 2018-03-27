@@ -51,7 +51,7 @@ then
     
     # cp addditional man pages
     /bin/mkdir -p /opt/man/man1
-    /bin/cp ../man/man1/* /opt/man/man1/
+    /bin/cp -L ../man/man1/* /opt/man/man1/
 	# add local IP to /etc/hosts+
 	IP=`/bin/sed -n 's/IPADDR=//p' /etc/dhclient/ipv4/dhcpcd-eth0.info`
 	/bin/grep -q "${IP}" /etc/hosts 

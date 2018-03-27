@@ -18,13 +18,13 @@ OLD_SPK_VERSION="1.880" # here I need the version of package we are upgrading FR
 /bin/sed -i -e '/^recovery:/d' /var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.users
 /bin/cat 'recovery: backup-config webmin acl' >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/webmin.acl
 /bin/cat /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/miniserv.recovery  >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.users
-/bin/cp  -r /var/packages/${SYNOPKG_PKGNAME}/target/update/webmin /var/packages/${SYNOPKG_PKGNAME}/target
+/bin/cp  -rL /var/packages/${SYNOPKG_PKGNAME}/target/update/webmin /var/packages/${SYNOPKG_PKGNAME}/target
 if [ "${OLD_SPK_VERSION}" -lt 1.881 ] ; then
     # copy everthing from update/etc dir to package target if old SPK
-    /bin/cp -r /var/packages/${SYNOPKG_PKGNAME}/target/update/etc /var/packages/${SYNOPKG_PKGNAME}/target/etc
+    /bin/cp -rL /var/packages/${SYNOPKG_PKGNAME}/target/update/etc /var/packages/${SYNOPKG_PKGNAME}/target/etc
 else
     # copy only acl files
-    /bin/cp /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/*.acl /var/packages/${SYNOPKG_PKGNAME}/target/etc
+    /bin/cp -L /var/packages/${SYNOPKG_PKGNAME}/target/update/etc/*.acl /var/packages/${SYNOPKG_PKGNAME}/target/etc
 fi
 
 /bin/rm -f /tmp/${SYNOPKG_PKGNAME}.upgrade
