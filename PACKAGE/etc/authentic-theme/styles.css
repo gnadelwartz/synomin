@@ -6,3 +6,17 @@
 html[data-background-style=gainsboro] .container:not(.form-signin-banner) {
     background: transparent !important;
 }
+.panel-heading,
+.panel-default-loading>.panel-heading-loading
+{
+	background-color:	#8bf !important;
+}
+.panel.panel-default,
+.panel-heading,
+html[data-background-style=gainsboro] .container-fluid .panel-body .panel.panel-default,
+.panel-default-loading
+{
+	border-color:		#8bf !important;
+	border-top-color:	#8bf !important;
+	border-radius:	2px !important;
+}
