@@ -5,7 +5,7 @@ PKGVER="`echo ${SYNOPKG_PKGVER} | /usr/bin/cut -d "-" -f1`"
 WMPKG="/var/packages/webmin/target"
 
 # save new and important etc files
-(cd ${WMPKG}/etc; cp config install_dir miniserv.conf start stop restart version *.sh *.pl ${WMPKG}/update/etc )
+(cd ${WMPKG}/etc; cp config install-dir miniserv.conf start stop restart version *.path *.sh *.pl ${WMPKG}/update/etc )
 
 /bin/rm -fr $WMPKG/etc
 /bin/rm -fr $WMPKG/bin
