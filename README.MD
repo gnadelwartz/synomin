@@ -9,11 +9,11 @@ If the IPKG OPKG Package Manager is installed webmin uses https:// protocol (see
 ## Click and Point installation
 
 Login to your Disc Station on port 5000, go to Package Center and  install Synology packages `Perl` and `Git server`.
-then download [webmin-1.883-003.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.883-003.spk)
+then download [webmin-1.883-004.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.883-004.spk)
 
 - open Synology Package Center and klick on "manual installation"
 
-- select your already download [webmin-1.883-003.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.883-003.spk)
+- select your already download [webmin-1.883-004.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.883-004.spk)
   , then klick "install"
 
 after sucessfull installation you can access webnmin with your browser on port 10000, e.g. http://192.178.0.20:10000
@@ -31,7 +31,7 @@ Webmin is configured to support the following Synology installable packages:
 ## Upgrade from older Version
 
 To upgrade from an already installed older SPK you can simply
-download [webmin-1.883-003.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.883-003.spk)
+download [webmin-1.883-004.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.883-004.spk)
 and install it. It will always download the lastest official Webmin Release.
 
 You can upgrade also direct from Qtip's Webmin 1.600 SPK, if you want to keep your modified Webmin Settings.
@@ -56,7 +56,7 @@ If you want to get most out of Webmin and Synology Disc Station, install the Com
 is only recommended for users with linux knowledge.
 
 - download `Easy Bootstrap Installer` from [HERE](https://www.cphub.net/?id=40&pid=677) and install before installing Webmin.
-- download [webmin-1.883-003.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.883-003.spk)
+- download [webmin-1.883-004.spk](https://github.com/gnadelwartz/synomin/raw/master/webmin-1.883-004.spk)
 and install webmin.
 
 Webmin automatically detects if IPKG is installed and use it.
