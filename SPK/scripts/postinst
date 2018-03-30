@@ -5,6 +5,7 @@ LOG="/var/packages/${SYNOPKG_PKGNAME}/log"
 WMTMP="\/`echo ${SYNOPKG_PKGDEST} | /usr/bin/cut -d'/' -f2`\/@tmp\/.webmin"
 WMCONFFILE="/var/packages/${SYNOPKG_PKGNAME}/target/etc/config"
 DSMLANGUAGE=${SYNOPKG_DSM_LANGUAGE}
+PMEXEC=`/usr/bin/find /volume?/@optware/bin /volume?/@qnapware/opt/bin /volume?/@entware/bin /volumeUSB?/usbshare*/@???ware/bin -type f -iname ?pkg 2> /dev/null`
 
 if [ "$DSMLANGUAGE" = "def" ] ; then
      DSMLANGUAGE="enu"
@@ -76,15 +77,17 @@ if [ ! -f "/tmp/${SYNOPKG_PKGNAME}.upgrade" ] ; then
      fi
 fi
 
-# add recommended packages if /opt/bin/ipkg exist
-if [ -f "/opt/bin/ipkg" ] ; then
-	if [ "$WMLANG" = "de" ] ; then
+# add recommended packages if package manager exist
+if [ -f "${PMEXEC}" ] ; then
+	if [ "${WMLANG}" = "de" ] ; then
 	   echo "IPKG erkannt, installiere empfohlene Pakete ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	else
 	   echo "IPKG detected, installing recommended packages ...<br>" > $SYNOPKG_TEMP_LOGFILE
 	fi
+	# an update of the package list is needed to guarantee the package dependencies
+     ${PMEXEC} update
 	# needed is: git dstat lm-sensors per-net-ssleay, all other are opional
-	/opt/bin/ipkg install coreutils git git-manpages dstat man man-pages lm-sensors iptables mc perl-net-ssleay lsof gcc make
+	${PMEXEC} install coreutils git git-manpages dstat man man-pages lm-sensors iptables mc openssl perl perl-net-ssleay lsof gcc make
 	# activate SSL and redirect to ssl 
 	/bin/sed -i 's/ssl=.*/ssl=1/' /var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.conf
 	echo "ssl_redirect=1" >>/var/packages/${SYNOPKG_PKGNAME}/target/etc/miniserv.conf
@@ -95,7 +98,13 @@ cd /var/packages/${SYNOPKG_PKGNAME}/target/scripts
 ./install.sh >> $SYNOPKG_TEMP_LOGFILE 2>&1
 if [ $? == "0" ] ; then
 	[ -f "/opt/sbin/makewhatis" ] && nohup /opt/sbin/makewhatis /opt/man /opt/share/man /volume1/@optware/man /volume1/@optware/share/man &
-	/bin/sed -i '/Failed to determine/d' $SYNOPKG_TEMP_LOGFILE
+	/bin/sed -i '-e /Failed to determine/d' -e 'LD_PRELOAD' $SYNOPKG_TEMP_LOGFILE
+	# set conig to syno-linux
+	/bin/sed -i -e '/^real_os_type=/' '/^os_type=s/d' -e '^real_os_version=/'${WMPKG}/etc/config 
+	/bin/echo 'real_os_type=Synology DSM' >>${WMPKG}/etc/config
+	/bin/echo 'os_type=syno-linux' >>${WMPKG}/etc/config
+	VERSION=`sed -n '/productversion=/s/productversion="\(.*\)\..*"/\1/p'< /etc.defaults/VERSION`
+	/bin/echo "real_os_version=${VERSION}" >>${WMPKG}/etc/config
 else
 	exit 1
 fi

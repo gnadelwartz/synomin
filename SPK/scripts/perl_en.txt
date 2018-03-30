@@ -1,1 +1,1 @@
-The built-in Perl functions in PowerPC based diskStation not working correctly with webmin. Please install the ipkg Perl.
+The Perl from Synology for PowerPC based diskstations not working correctly with webmin. Please install the ipkg/opkg Perl.

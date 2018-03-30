@@ -19,8 +19,8 @@ tarext="tar.gz"
 MINICONF=/var/packages/webmin/target/etc/miniserv.conf
 
 # download latest webmin, fallback to download webmin ...
-echo "download latest webmin release ...<br>"
-/bin/wget -nv "https://www.webmin.com/download/$webmin.$tarext"
+/bin/echo "download latest webmin release ...<br>"
+/bin/wget -nv "http://www.webmin.com/download/$webmin.$tarext"
 if [ ! -f "$webmin.$tarext" ] ; then
     /bin/wget -nv "http://download.webmin.com/devel/tarballs/$webmin.$tarext"
 fi
@@ -32,7 +32,7 @@ then
     /bin/tar -xzf "$webmin.$tarext"
     /bin/rm "$webmin.$tarext"
 
-    echo "<br>Start installation of `ls -d webmin*` ...<br>"
+    /bin/echo "<br>Start installation of `/bin/ls -d webmin*` ...<br>"
     
     cd webmin*
     #get enviroanment from config file and prepare non interactive install
@@ -42,8 +42,8 @@ then
     atboot="NO"
     makeboot="NO"
     nouninstall="YES"
-    echo $PERL >$config_dir/perl-path
-    echo $var_dir >$config_dir/var-path
+    /bin/echo $PERL >$config_dir/perl-path
+    /bin/echo $var_dir >$config_dir/var-path
     export config_dir atboot nouninstall makeboot nostart
     # run install script, output only Errors and important messages
     ./setup.sh $install_dir | /bin/grep -e "Webmin" -e "ERROR" -e ":10000" -e "s/Use your web//"| /bin/sed 's/$/<br>/'
@@ -61,6 +61,6 @@ then
     
     /bin/rm -rf webmin*
 else
-   echo "<p>Download of webmin failed!<p>"
+   /bin/echo "<p>Download of webmin failed!<p>"
    exit 1
 fi
