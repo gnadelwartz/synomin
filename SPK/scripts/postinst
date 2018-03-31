@@ -99,12 +99,6 @@ cd /var/packages/${SYNOPKG_PKGNAME}/target/scripts
 if [ $? == "0" ] ; then
 	[ -f "/opt/sbin/makewhatis" ] && nohup /opt/sbin/makewhatis /opt/man /opt/share/man /volume1/@optware/man /volume1/@optware/share/man &
 	/bin/sed -i '-e /Failed to determine/d' -e 'LD_PRELOAD' $SYNOPKG_TEMP_LOGFILE
-	# set conig to syno-linux
-	/bin/sed -i -e '/^real_os_type=/' '/^os_type=s/d' -e '^real_os_version=/'${WMPKG}/etc/config 
-	/bin/echo 'real_os_type=Synology DSM' >>${WMPKG}/etc/config
-	/bin/echo 'os_type=syno-linux' >>${WMPKG}/etc/config
-	VERSION=`sed -n '/productversion=/s/productversion="\(.*\)\..*"/\1/p'< /etc.defaults/VERSION`
-	/bin/echo "real_os_version=${VERSION}" >>${WMPKG}/etc/config
 else
 	exit 1
 fi

@@ -46,9 +46,10 @@ then
     /bin/echo $var_dir >$config_dir/var-path
     export config_dir atboot nouninstall makeboot nostart
     # run install script, output only Errors and important messages
-    ./setup.sh $install_dir | /bin/grep -e "Webmin" -e "ERROR" -e ":10000" -e "s/Use your web//"| /bin/sed 's/$/<br>/'
+	/bin/echo '<div class="list">'
+    ./setup.sh $install_dir | /bin/sed 's/$/<br>/'
+	/bin/echo '</div> <style> .list { height: 8em; overflow-y: hidden; } .list:hover { height: auto; } </style>'
     cd ..
-    
     # cp addditional man pages
     /bin/mkdir -p /opt/man/man1
     /bin/cp -L ../man/man1/* /opt/man/man1/

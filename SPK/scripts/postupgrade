@@ -6,12 +6,12 @@ WMPKG="/var/packages/webmin/target"
 
 # save new and important etc files
 (cd ${WMPKG}/etc; /bin/cp config install-dir miniserv.conf start stop restart version *.path *.sh *.pl ${WMPKG}/update/etc )
+${WMPKG}/etc/stop
 
 /bin/rm -fr $WMPKG/etc
 /bin/rm -fr $WMPKG/bin
 /bin/sleep 1
 /bin/cp -r ${PKG_VOL_TMP}/webmin/log/* /var/log/webmin/
-$WEBMIN/etc/stop
 
 /bin/mv -f ${PKG_VOL_TMP}/webmin/etc $WMPKG
 /bin/sleep 1
@@ -25,6 +25,7 @@ $WEBMIN/etc/stop
 /bin/cp  -rL ${WMPKG}/update/webmin ${WMPKG}/
 # clear caches
 /bin/rm ${WMPKG}/etc/*.cache ${WMPKG}/etc/*.descs ${WMPKG}/etc/*.cats
+${WMPKG}/etc/stop
 
 /bin/rm -f /tmp/${SYNOPKG_PKGNAME}.upgrade
 date +"%c updated to version ${SYNOPKG_PKGVER}<br>" >> $LOG
