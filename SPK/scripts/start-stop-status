@@ -10,7 +10,7 @@ WMPERL="`cat $WMPKG/etc/perl-path`"
 #USEPERL="/usr/bin/perl"
 #if [ -f /opt/bin/perl ] ; then USEPERL="/opt/bin/perl"; fi
 PSCMD="/bin/ps"
-[ ${DSMMAJOR} -ge 6 ] && PSCMD="/bin/ps ax"
+[ "${DSMMAJOR}" -ge 6 ] && PSCMD="/bin/ps ax"
 
 case $1 in
 start)
