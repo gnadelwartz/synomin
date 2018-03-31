@@ -96,8 +96,7 @@ fi
 export WMLANG
 cd /var/packages/${SYNOPKG_PKGNAME}/target/scripts 
 ./install.sh >> $SYNOPKG_TEMP_LOGFILE 2>&1
-/bin/sed -i '-e /Failed to determine/d' -e '/LD_PRELOAD/d' -e '/^$/' $SYNOPKG_TEMP_LOGFILE
-/bin/echo $SYNOPKG_TEMP_LOGFILE >>$SYNOPKG_TEMP_LOGFILE
+/bin/sed -i '-e /Failed to determine/d' -e '/LD_PRELOAD/d' -e '/X-Frame-Options/,/<\/html>/d' $SYNOPKG_TEMP_LOGFILE
 if [ $? == "0" ] ; then
 	[ -f "/opt/sbin/makewhatis" ] && nohup /opt/sbin/makewhatis /opt/man /opt/share/man /volume1/@optware/man /volume1/@optware/share/man &
 else
