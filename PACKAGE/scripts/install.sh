@@ -47,8 +47,9 @@ then
     export config_dir atboot nouninstall makeboot nostart
     # run install script, output only Errors and important messages
 	/bin/echo '<div class="list">'
-    ./setup.sh $install_dir | /bin/grep -e "Webmin" -e "ERROR" -e ":10000" -e "s/Use your web//"| /bin/sed 's/$/<br>/'
-	/bin/echo '</div> <style> .list { height: 10em; overflow-y: hidden; } .list:hover { height: auto; } </style>'
+    ./setup.sh $install_dir | /bin/grep -e "\*\*\*"-e "Webmin" -e "ERROR" -e ":10000" -e "s/Use your web//" -e "/browser/i"| /bin/sed 's/$/<br>/'
+	/bin/echo '</div> <style> .list { height: 10em; overflow-y: hidden; } .list:hover { height: auto; }
+				#sds-desktop div.active-win { left: 100px !important; top: 100px !important; }</style>'
     cd ..
     # cp addditional man pages
     /bin/mkdir -p /opt/man/man1
