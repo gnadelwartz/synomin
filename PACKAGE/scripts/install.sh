@@ -35,6 +35,10 @@ then
     /bin/echo "<br>Start installation of `/bin/ls -d webmin*` ...<br>"
     
     cd webmin*
+	# fix synomin detection prior for 1.881
+	if [ `cat version` = "1.881" ] ; then
+		/bin/sed  -i 's#/productversion=.*$#/productversion="([0-9]+\.[0-9]+(\.[0-9])?)#' os_list.txt
+	fi
     #get enviroanment from config file and prepare non interactive install
     install_dir=`/bin/grep "^root=" ${MINICONF}| /bin/sed 's/.*root=//'`
     config_dir=`/bin/grep "env_WEBMIN_CONFIG=" ${MINICONF}| /bin/sed 's/.*_WEBMIN_CONFIG=//'`
