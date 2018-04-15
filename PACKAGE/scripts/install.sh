@@ -37,7 +37,7 @@ then
     cd webmin*
 	# fix synomin detection prior for 1.881
 	if [ `cat version` = "1.881" ] ; then
-		/bin/sed  -i 's#/productversion=.*$#/productversion="([0-9]+\.[0-9]+(\.[0-9])?)#' os_list.txt
+		/bin/sed  -i 's#/productversion=.*$#/productversion="([0-9]+\.[0-9]+(\.[0-9]+)?)/#' os_list.txt
 	fi
     #get enviroanment from config file and prepare non interactive install
     install_dir=`/bin/grep "^root=" ${MINICONF}| /bin/sed 's/.*root=//'`
